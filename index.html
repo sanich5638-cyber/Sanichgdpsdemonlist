@@ -30,8 +30,6 @@
             href="css/components/tabs.css"
         />
         <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
-        <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
-        <script type="module" src="js/main.js"></script>
     </head>
     <body id="app">
         <header :class="{ dark: store.dark }">
@@ -40,20 +38,17 @@
                 <p>v1.0.0</p>
             </div>
             <nav class="nav">
-                <router-link class="nav__tab" to="/">
+                <a class="nav__tab" :class="{ active: currentPage === 'list' }" @click="switchPage('list')">
                     <span class="type-label-lg">List</span>
-                </router-link>
-                <router-link class="nav__tab" to="/leaderboard">
+                </a>
+                <a class="nav__tab" :class="{ active: currentPage === 'leaderboard' }" @click="switchPage('leaderboard')">
                     <span class="type-label-lg">Leaderboard</span>
-                </router-link>
-                <router-link class="nav__tab" to="/roulette">
+                </a>
+                <a class="nav__tab" :class="{ active: currentPage === 'roulette' }" @click="switchPage('roulette')">
                     <span class="type-label-lg">Roulette</span>
-                </router-link>
+                </a>
                 <div class="nav__actions">
-                    <button
-                        class="nav__icon"
-                        @click.prevent="store.toggleDark()"
-                    >
+                    <button class="nav__icon" @click.prevent="store.toggleDark()">
                         <img
                             :src="store.dark ? 'assets/light.svg' : 'assets/dark.svg'"
                             alt=""
@@ -71,6 +66,85 @@
                 </div>
             </nav>
         </header>
-        <router-view :class="{ dark: store.dark }"></router-view>
+
+        <div class="page-content" :class="{ dark: store.dark }">
+            <!-- СТРАНИЦА LIST -->
+            <div v-if="currentPage === 'list'" class="page">
+                <div class="demons-container">
+                    <h3>Demon List</h3>
+                    <div class="demon-item" v-for="(demon, index) in demons" :key="index">
+                        <div class="demon-position">#{{ index + 1 }}</div>
+                        <div class="demon-info">
+                            <div class="demon-name">{{ demon.name }}</div>
+                            <div class="demon-author">by {{ demon.author }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- СТРАНИЦА LEADERBOARD -->
+            <div v-if="currentPage === 'leaderboard'" class="page">
+                <h3>Leaderboard</h3>
+                <p>Таблица лидеров будет здесь</p>
+                <div class="leaderboard-item" v-for="(player, index) in leaderboard" :key="index">
+                    <div class="player-rank">#{{ index + 1 }}</div>
+                    <div class="player-name">{{ player.name }}</div>
+                    <div class="player-score">{{ player.score }}</div>
+                </div>
+            </div>
+            
+            <!-- СТРАНИЦА ROULETTE -->
+            <div v-if="currentPage === 'roulette'" class="page">
+                <h3>Roulette</h3>
+                <p>Рулетка будет здесь</p>
+                <button class="roulette-btn" @click="spinRoulette">Spin Roulette</button>
+                <div v-if="selectedDemon" class="roulette-result">
+                    Selected: {{ selectedDemon.name }}
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const { createApp } = Vue;
+
+            createApp({
+                data() {
+                    return {
+                        currentPage: 'list',
+                        store: {
+                            dark: false,
+                            toggleDark() {
+                                this.dark = !this.dark;
+                            }
+                        },
+                        demons: [
+                            { name: "Road to hell", author: "DudeArctik" },
+                            { name: "Silent Yatagista", author: "DudeArctik" },
+                            { name: "Pulsar", author: "Gdsher228" }
+                        ],
+                        leaderboard: [
+                            { name: "Nagasaki", score: 500 },
+                            { name: "gogolik22", score: 499 },
+                            { name: "zolnik", score: 544 }
+                        ],
+                        selectedDemon: null
+                    }
+                },
+                methods: {
+                    switchPage(page) {
+                        this.currentPage = page;
+                    },
+                    spinRoulette() {
+                        if (this.demons.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * this.demons.length);
+                            this.selectedDemon = this.demons[randomIndex];
+                        }
+                    }
+                },
+                mounted() {
+                    console.log("Sanich GDPS Demon List loaded!");
+                }
+            }).mount('#app');
+        </script>
     </body>
-    </html>
+                        </html>
