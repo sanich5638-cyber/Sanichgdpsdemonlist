@@ -4,101 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanich GDPS Demon List</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: linear-gradient(to bottom, #000000, #1e3a8a);
-            min-height: 100vh; 
-            font-family: Arial, sans-serif; 
-            color: white;
-            padding: 10px;
-        }
-        .container { max-width: 400px; margin: 0 auto; }
-        .header { text-align: center; margin-bottom: 15px; }
-        .demon-card {
-            background: rgba(26, 26, 26, 0.9);
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-        }
-        .modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 90%;
-        }
-    </style>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h2>Sanich GDPS Demon List</h2>
-            <p>Всего демонов: <span id="demonCount">0</span></p>
+    <div id="app">
+        <h1>Sanich GDPS Demon List</h1>
+        <p>Всего демонов: {{ demons.length }}</p>
+        
+        <div v-if="demons.length > 0">
+            <div v-for="demon in demons" :key="demon.id" 
+                 style="background: #333; padding: 10px; margin: 5px; cursor: pointer;"
+                 @click="currentDemon = demon">
+                {{ demon.name }} by {{ demon.author }}
+            </div>
         </div>
-        <div id="demonsList"></div>
-    </div>
-
-    <div class="modal" id="modal">
-        <div class="modal-content" id="modalContent"></div>
+        <div v-else>
+            <p style="color: red;">Демоны не загружены! Проверь консоль (F12)</p>
+        </div>
     </div>
 
     <script>
-        // ТВОИ ДАННЫЕ ДЕМОНОВ ЗДЕСЬ...
-        const demons = [ /* вставь сюда весь JSON с демонами */ ];
-        
-        // ОТОБРАЖЕНИЕ ДЕМОНОВ
-        function renderDemons() {
-            const list = document.getElementById('demonsList');
-            const count = document.getElementById('demonCount');
-            
-            count.textContent = demons.length;
-            list.innerHTML = '';
-            
-            demons.forEach(demon => {
-                const card = document.createElement('div');
-                card.className = 'demon-card';
-                card.innerHTML = `
-                    <div style="font-weight: bold">${demon.name}</div>
-                    <div>Автор: ${demon.author}</div>
-                    <div>ID: ${demon.id}</div>
-                `;
-                card.onclick = () => showDemonDetails(demon);
-                list.appendChild(card);
-            });
-        }
-        
-        // ПОКАЗ ДЕТАЛЕЙ
-        function showDemonDetails(demon) {
-            const modal = document.getElementById('modal');
-            const content = document.getElementById('modalContent');
-            
-            content.innerHTML = `
-                <h2>${demon.name}</h2>
-                <p><strong>ID:</strong> ${demon.id}</p>
-                <p><strong>Автор:</strong> ${demon.author}</p>
-                <p><strong>Пароль:</strong> ${demon.password}</p>
-                <button onclick="closeModal()">Закрыть</button>
-            `;
-            
-            modal.style.display = 'flex';
-        }
-        
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-        
-        // ЗАПУСК
-        renderDemons();
+        // ПРОСТОЙ ТЕСТ - 2 демона для проверки
+        const testDemons = [
+            { id: 1, name: "Test Demon 1", author: "Test Author" },
+            { id: 2, name: "Test Demon 2", author: "Test Author 2" }
+        ];
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    demons: testDemons,
+                    currentDemon: null
+                }
+            }
+        }).mount('#app');
+
+        console.log('Vue app mounted:', app);
+        console.log('Demons loaded:', app.demons);
     </script>
 </body>
 </html>
