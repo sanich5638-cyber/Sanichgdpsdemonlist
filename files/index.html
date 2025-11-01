@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GDPSTop Demons</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.4.15/dist/vue.global.js"></script>
     <style>
+        /* POINTERCREATE STYLE */
         * { 
             margin: 0; 
             padding: 0; 
@@ -23,6 +24,7 @@
             min-height: 100vh;
         }
         
+        /* ХЕДЕР */
         .header {
             background: #1a1a1a;
             padding: 15px 0;
@@ -39,6 +41,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .logo h1 {
@@ -67,11 +75,17 @@
             transition: all 0.3s ease;
         }
         
+        .nav-tab:hover {
+            background: #3a3a3a;
+            color: #fff;
+        }
+        
         .nav-tab.active {
             background: linear-gradient(45deg, #ff6b00, #ff8a00);
             color: #fff;
         }
         
+        /* ОСНОВНОЙ КОНТЕНТ */
         .main-container {
             max-width: 1200px;
             margin: 30px auto;
@@ -88,6 +102,7 @@
             min-height: 600px;
         }
         
+        /* СПИСОК ДЕМОНОВ */
         .demons-sidebar {
             background: #1a1a1a;
             border-right: 1px solid #2a2a2a;
@@ -160,6 +175,7 @@
             margin-top: 2px;
         }
         
+        /* ДЕТАЛИ УРОВНЯ */
         .level-details {
             padding: 30px;
             background: #1a1a1a;
@@ -195,6 +211,7 @@
             margin-left: 5px;
         }
         
+        /* СТАТИСТИКА */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -223,6 +240,7 @@
             letter-spacing: 0.5px;
         }
         
+        /* СЕКЦИИ ИНФОРМАЦИИ */
         .info-section {
             margin: 25px 0;
         }
@@ -276,6 +294,12 @@
             font-weight: 600;
         }
         
+        .video-link:hover {
+            color: #ff8a00;
+            text-decoration: underline;
+        }
+        
+        /* РЕКОРДЫ */
         .records-list {
             max-height: 300px;
             overflow-y: auto;
@@ -294,6 +318,7 @@
         
         .record-item:hover {
             background: #333;
+            transform: translateX(5px);
         }
         
         .record-item.top-record {
@@ -345,6 +370,11 @@
             color: #ff6b00;
             text-decoration: none;
             font-size: 16px;
+            margin-left: 10px;
+        }
+        
+        .record-link:hover {
+            color: #ff8a00;
         }
         
         .no-records {
@@ -356,17 +386,28 @@
             border-radius: 8px;
         }
         
-        .demons-list::-webkit-scrollbar,
+        /* СКРОЛЛБАР */
+        .demons-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .demons-list::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        .demons-list::-webkit-scrollbar-thumb {
+            background: #ff6b00;
+            border-radius: 3px;
+        }
+        
         .records-list::-webkit-scrollbar {
             width: 6px;
         }
         
-        .demons-list::-webkit-scrollbar-track,
         .records-list::-webkit-scrollbar-track {
             background: #1a1a1a;
         }
         
-        .demons-list::-webkit-scrollbar-thumb,
         .records-list::-webkit-scrollbar-thumb {
             background: #ff6b00;
             border-radius: 3px;
@@ -375,6 +416,7 @@
 </head>
 <body>
     <div id="app">
+        <!-- ХЕДЕР -->
         <header class="header">
             <div class="header-container">
                 <div class="logo">
@@ -388,8 +430,10 @@
             </div>
         </header>
 
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
         <div class="main-container">
             <div class="content-grid">
+                <!-- СПИСОК ДЕМОНОВ -->
                 <div class="demons-sidebar">
                     <div class="sidebar-header">
                         <h2>Demon List</h2>
@@ -411,6 +455,7 @@
                     </div>
                 </div>
 
+                <!-- ДЕТАЛИ УРОВНЯ -->
                 <div class="level-details">
                     <div v-if="loading" class="loading-state">
                         <div class="section-title">Loading Demon List...</div>
@@ -423,6 +468,7 @@
                     </div>
                     
                     <div v-else>
+                        <!-- ЗАГОЛОВОК УРОВНЯ -->
                         <div class="level-header">
                             <h1 class="level-title">{{ currentDemon.name }}</h1>
                             <div class="level-author">
@@ -433,6 +479,7 @@
                             </div>
                         </div>
                         
+                        <!-- СТАТИСТИКА -->
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-value">{{ currentDemon.percentToQualify }}%</div>
@@ -452,6 +499,7 @@
                             </div>
                         </div>
                         
+                        <!-- ИНФОРМАЦИЯ О СОЗДАТЕЛЯХ -->
                         <div class="info-section" v-if="currentDemon.creators">
                             <div class="section-title">Creators</div>
                             <div class="creators-list">
@@ -459,6 +507,7 @@
                             </div>
                         </div>
                         
+                        <!-- ВЕРИФИКАЦИЯ -->
                         <div class="info-section" v-if="currentDemon.verifier || hasVerification()">
                             <div class="section-title">Verification</div>
                             <div class="verification-info">
@@ -473,6 +522,7 @@
                             </div>
                         </div>
                         
+                        <!-- РЕКОРДЫ -->
                         <div class="records-section">
                             <div class="section-title">
                                 Records ({{ currentDemon.records ? currentDemon.records.length : 0 }})
@@ -508,65 +558,36 @@
     </div>
 
     <script>
-        Vue.createApp({
-            data() {
-                return {
-                    levels: [],
-                    selectedDemon: null,
-                    loading: true
-                }
-            },
-            computed: {
-                demons() {
-                    return this.levels;
-                },
-                currentDemon() {
-                    if (this.selectedDemon === null || !this.demons.length) return null;
-                    return this.demons[this.selectedDemon];
-                }
-            },
-            methods: {
-                selectDemon(index) {
-                    this.selectedDemon = index;
-                },
-                getStatusColor(status) {
-                    const statusColors = {
-                        'In verification': '#ffa500',
-                        'Verified': '#4CAF50', 
-                        'Rejected': '#f44336'
-                    };
-                    return statusColors[status] || '#888';
-                },
-                getRecordDisplay(record, levelType) {
-                    if (!record) return 'N/A';
-                    if (levelType === 'Platformer' && record.time) {
-                        return record.time;
-                    }
-                    return (record.percent || 0) + '%';
-                },
-                hasVerification() {
-                    return this.currentDemon && this.currentDemon.verification && this.currentDemon.verification !== 'No data';
-                },
-                getCreatorsText(creators) {
-                    if (!creators || !Array.isArray(creators)) return 'No data';
-                    return creators.join(', ');
-                },
-                async loadData() {
-                    try {
-                        const response = await fetch('data.json');
-                        const data = await response.json();
-                        this.levels = data.levels || [];
-                        this.loading = false;
-                    } catch (error) {
-                        console.error('Error loading data:', error);
-                        this.loading = false;
-                    }
-                }
-            },
-            async mounted() {
-                await this.loadData();
-            }
-        }).mount('#app');
-    </script>
-</body>
-    </html>
+        // ПРОСТОЙ ВАРИАНТ С ДАННЫМИ ВНУТРИ КОДА
+           selectDemon(index) {
+        this.selectedDemon = index;
+    },
+    getStatusColor(status) {
+        const statusColors = {
+            'In verification': '#ffa500',
+            'Verified': '#4CAF50',
+            'Rejected': '#f44336'
+        };
+        return statusColors[status] || '#888';
+    },
+    getRecordDisplay(record, levelType) {
+        if (!record) return 'N/A';
+        if (levelType === 'Platformer' && record.time) {
+            return record.time;
+        }
+        return (record.percent || 0) + '%';
+    },
+    hasVerification() {
+        return this.currentDemon && this.currentDemon.verification && this.currentDemon.verification !== 'No data';
+    },
+    getCreatorsText(creators) {
+        if (!creators || !Array.isArray(creators)) return 'No data';
+        return creators.join(', ');
+    }
+},
+async mounted() {
+    await this.loadData();
+    console.log("✅ Vue.js ЗАРАБОТАЛ!");
+    console.log("✅ Демонов загружено:", this.levels.length);
+}
+}).mount('#app');
