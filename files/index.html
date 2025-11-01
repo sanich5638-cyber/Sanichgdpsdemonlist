@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanich GDPS Demon List</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
-            background: #0f0f0f;
+            background: black;
             color: white;
             padding: 20px;
             font-family: Arial;
         }
-        .demon-item {
+        .demon {
             background: #1a1a1a;
             padding: 15px;
             margin: 10px 0;
             border-radius: 8px;
             cursor: pointer;
         }
-        .demon-item:hover {
+        .demon:hover {
             background: #2a2a2a;
         }
     </style>
@@ -28,18 +26,19 @@
     <div id="app">
         <h1>Sanich GDPS Demon List</h1>
         
-        <div class="demon-item" v-for="(demon, index) in demons" :key="index" @click="selectDemon(index)">
+        <div class="demon" v-for="(demon, index) in demons" :key="index" @click="selectDemon(index)">
             #{{ index + 1 }} - <strong>{{ demon.name }}</strong> by {{ demon.author }}
         </div>
 
-        <div v-if="selectedDemon !== null" style="margin-top: 30px; padding: 20px; background: #1a1a1a;">
-            <h2>Selected: {{ currentDemon.name }}</h2>
+        <div v-if="selectedDemon !== null" style="margin-top: 20px; padding: 15px; background: #2a2a2a;">
+            <h2>🎯 {{ currentDemon.name }}</h2>
             <p>Author: {{ currentDemon.author }}</p>
             <p>ID: {{ currentDemon.id }}</p>
         </div>
     </div>
 
     <script>
+        // ПРОСТОЙ ТЕСТ - ДОЛЖЕН РАБОТАТЬ 100%
         Vue.createApp({
             data() {
                 return {
@@ -59,11 +58,10 @@
             methods: {
                 selectDemon(index) {
                     this.selectedDemon = index;
-                    console.log("Selected:", this.currentDemon.name);
                 }
             },
             mounted() {
-                console.log("✅ Vue.js РАБОТАЕТ!");
+                console.log("✅ VUE.JS РАБОТАЕТ!");
             }
         }).mount('#app');
     </script>
