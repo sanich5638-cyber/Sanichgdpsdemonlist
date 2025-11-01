@@ -1,3 +1,4 @@
+/* ===== ОСНОВНЫЕ СТИЛИ ===== */
 * {
     margin: 0;
     padding: 0;
@@ -5,11 +6,12 @@
 }
 
 body {
-    background: #0c0c0c;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000000;
+    font-family: 'Arial', sans-serif;
     color: #ffffff;
-    line-height: 1.4;
-    padding: 15px;
+    line-height: 1.3;
+    padding: 10px;
+    min-height: 100vh;
 }
 
 .container {
@@ -17,42 +19,93 @@ body {
     margin: 0 auto;
 }
 
+/* ===== ШАПКА ===== */
 .header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     padding: 15px 0;
-    border-bottom: 1px solid #2a2a2a;
 }
 
 .main-title {
-    font-size: 2.2em;
+    font-size: 2em;
     font-weight: bold;
     color: #ffffff;
     margin-bottom: 5px;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-.demon-count {
-    color: #888;
+.stats {
+    color: #888888;
     font-size: 0.9em;
 }
 
-/* Стиль демон-листа как в GD */
-.demon-list {
+.demon-count {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.stat-verified {
+    color: #27ae60;
+}
+
+.stat-pending {
+    color: #f39c12;
+}
+
+.stat-platformers {
+    color: #9b59b6;
+}
+
+/* ===== ПОИСК И СОРТИРОВКА ===== */
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
     background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+.sort-select {
+    padding: 10px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+}
+
+/* ===== СПИСОК ДЕМОНОВ ===== */
+.demon-list {
+    background: #0a0a0a;
     border-radius: 8px;
     border: 1px solid #2a2a2a;
 }
 
 .demon-item {
-    padding: 15px 20px;
-    border-bottom: 1px solid #2a2a2a;
+    padding: 12px 15px;
+    border-bottom: 1px solid #1a1a1a;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .demon-item:hover {
-    background: #252525;
+    background: #111111;
+    transform: translateX(5px);
 }
 
 .demon-item:last-child {
@@ -62,21 +115,20 @@ body {
 .demon-position {
     color: #ff6b6b;
     font-weight: bold;
-    font-size: 1.1em;
-    margin-bottom: 3px;
+    font-size: 1em;
+    margin-bottom: 2px;
 }
 
 .demon-name {
-    font-size: 1.3em;
-    font-weight: bold;
     color: #ffffff;
+    font-size: 1em;
     margin-bottom: 2px;
 }
 
 .demon-author {
-    color: #888;
+    color: #888888;
     font-size: 0.9em;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .demon-progress {
@@ -84,121 +136,162 @@ body {
     font-size: 0.85em;
 }
 
-/* Модальное окно */
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 10px;
 }
 
 .modal-content {
-    background: #1a1a1a;
-    border: 2px solid #333;
-    border-radius: 8px;
-    padding: 25px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
     overflow-y: auto;
+    border-radius: 8px;
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    background: #111;
+    padding: 20px;
     border-bottom: 1px solid #333;
+    position: relative;
 }
 
 .modal-title {
     font-size: 1.5em;
     font-weight: bold;
     color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.modal-subtitle {
+    color: #888;
+    font-size: 1em;
 }
 
 .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
     background: none;
     border: none;
     color: #888;
     font-size: 1.5em;
     cursor: pointer;
-    padding: 0;
     width: 30px;
     height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .close-btn:hover {
     color: #ffffff;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
 }
 
-.demon-info {
-    margin-bottom: 20px;
+.modal-body {
+    padding: 20px;
 }
 
-.info-row {
-    margin-bottom: 8px;
-    display: flex;
+/* ===== СЕКЦИИ ИНФОРМАЦИИ ===== */
+.info-section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    color: #ffffff;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.info-item {
+    margin-bottom: 10px;
 }
 
 .info-label {
     color: #888;
-    min-width: 120px;
+    font-size: 0.9em;
+    margin-bottom: 3px;
+    font-weight: bold;
 }
 
 .info-value {
     color: #ffffff;
+    font-size: 1em;
 }
 
-.records-section {
-    margin-top: 20px;
+/* ===== ТАБЛИЦА РЕКОРДОВ ===== */
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
 }
 
-.records-title {
-    color: #ff6b6b;
-    margin-bottom: 10px;
-    font-weight: bold;
+.records-table th {
+    background: #111;
+    color: #888;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 0.9em;
+    border-bottom: 1px solid #333;
 }
 
-.record-item {
-    background: #252525;
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    border-left: 3px solid #4ecdc4;
+.records-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #222;
+    font-size: 0.9em;
 }
 
 .record-user {
-    font-weight: bold;
     color: #ffffff;
-    margin-bottom: 3px;
+    font-weight: bold;
 }
 
-.record-details {
-    color: #888;
-    font-size: 0.9em;
+.record-progress {
+    color: #4ecdc4;
 }
 
 .record-link {
     color: #4ecdc4;
     text-decoration: none;
+    padding: 2px 6px;
+    border: 1px solid #4ecdc4;
+    border-radius: 3px;
+    font-size: 0.8em;
 }
 
 .record-link:hover {
-    text-decoration: underline;
+    background: #4ecdc4;
+    color: #000;
 }
 
-/* Статусы */
+/* ===== СТАТУСЫ ===== */
 .status-badge {
     display: inline-block;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 10px;
     font-size: 0.7em;
     font-weight: bold;
@@ -218,4 +311,66 @@ body {
 .status-unverified {
     background: #e74c3c;
     color: white;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 5px;
+    }
+    
+    .main-title {
+        font-size: 1.6em;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    .search-input {
+        min-width: auto;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .demon-item {
+        padding: 10px 12px;
+    }
+    
+    .modal-content {
+        margin: 5px;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    .records-table {
+        font-size: 0.8em;
+    }
+    
+    .records-table th,
+    .records-table td {
+        padding: 6px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.4em;
+    }
+    
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-title {
+        font-size: 1.3em;
+    }
+    
+    .section-title {
+        font-size: 1em;
+    }
     }
