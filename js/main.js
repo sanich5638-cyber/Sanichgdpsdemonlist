@@ -378,59 +378,65 @@ const app = Vue.createApp({
     },
     
     methods: {
-        // Выбор демона для просмотра деталей
-        selectDemon(demon) {
-            this.selectedDemon = demon;
-        },
-        
-        // Закрытие модального окна
-        closeModal() {
-            this.selectedDemon = null;
-        },
-        
-        // Получение статуса верификации
-        getStatusClass(demon) {
-            if (demon.verifier && demon.verification) return 'status-verified';
-            if (demon.status && demon.status.includes('verification')) return 'status-pending';
-            return 'status-unverified';
-        },
-        
-        // Текст статуса
-        getStatusText(demon) {
-            if (demon.verifier && demon.verification) return 'Verified';
-            if (demon.status && demon.status.includes('verification')) return 'In Verification';
-            return 'Unverified';
-        },
-        
-        // Расчет прогресса для отображения
-        getDemonProgress(demon) {
-            if (demon.records && demon.records.length > 0) {
-                const bestRecord = Math.max(...demon.records.map(r => r.percent));
-                return `${bestRecord}% — 100%`;
-            }
-            return `0% — 100%`;
-        },
-        
-        // Расчет очков для демон-листа
-        calculateScore(demon, percent) {
-            // Простая формула для демо
-            const baseScore = 1000 - (demon.position * 45);
-            return (baseScore * (percent / 100)).toFixed(2);
-        },
-        
-        // Отображение рекорда (проценты или время)
-        getRecordDisplay(record, levelType) {
-            if (levelType === 'Platformer' && record.time) {
-                return record.time;
-            }
-            return `${record.percent}%`;
-        }
+    // Выбор демона для просмотра деталей
+    selectDemon(demon) {
+        this.selectedDemon = demon;
     },
     
-    mounted() {
-        console.log('GD Demon List loaded successfully!');
-        console.log(`Loaded ${this.demons.length} demons`);
+    // Закрытие модального окна
+    closeModal() {
+        this.selectedDemon = null;
+    },
+    
+    // Получение статуса верификации
+    getStatusClass(demon) {
+        if (demon.verifier && demon.verification) return 'status-verified';
+        if (demon.status && demon.status.includes('verification')) return 'status-pending';
+        return 'status-unverified';
+    },
+    
+    // Текст статуса
+    getStatusText(demon) {
+        if (demon.verifier && demon.verification) return 'Verified';
+        if (demon.status && demon.status.includes('verification')) return 'In Verification';
+        return 'Unverified';
+    },
+    
+    // Расчет прогресса для отображения
+    getDemonProgress(demon) {
+        if (demon.records && demon.records.length > 0) {
+            const bestRecord = Math.max(...demon.records.map(r => r.percent));
+            return `${bestRecord}% — 100%`;
+        }
+        return `0% — 100%`;
+    },
+    
+    // Расчет очков для демон-листа
+    calculateScore(demon, percent) {
+        // Простая формула для демо
+        const baseScore = 1000 - (demon.position * 45);
+        return (baseScore * (percent / 100)).toFixed(2);
+    },
+    
+    // Отображение рекорда (проценты или время)
+    getRecordDisplay(record, levelType) {
+        if (levelType === 'Platformer' && record.time) {
+            return record.time;
+        }
+        return `${record.percent}%`;
+    },
+    
+    // ★★★ ДОБАВЛЕННЫЙ МЕТОД ★★★
+    // Проверка есть ли верификация
+    hasVerification(demon) {
+        return demon.verification && demon.verification !== '' && demon.verification !== 'No data';
     }
+},
+
+mounted() {
+    console.log('GD Demon List loaded successfully!');
+    console.log(`Loaded ${this.demons.length} demons`);
+}
 });
 
 // Монтируем приложение
