@@ -1,17 +1,11 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanich GDPS Demon List</title>
     <style>
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             background: linear-gradient(to bottom, #000000, #1e3a8a);
             min-height: 100vh; 
@@ -19,456 +13,92 @@
             color: white;
             padding: 10px;
         }
-        
-        .container { 
-            max-width: 400px; 
-            margin: 0 auto; 
-        }
-        
-        .header { 
-            text-align: center; 
-            margin-bottom: 15px; 
-        }
-        
-        /* КАРТОЧКИ ДЕМОНОВ */
+        .container { max-width: 400px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 15px; }
         .demon-card {
             background: rgba(26, 26, 26, 0.9);
             border-radius: 6px;
             padding: 12px;
             margin-bottom: 8px;
-            position: relative;
             cursor: pointer;
-            transition: all 0.3s;
         }
-        
-        .demon-card:hover {
-            background: rgba(50, 50, 50, 0.9);
-            transform: scale(1.02);
-        }
-        
-        .demon-name { 
-            font-size: 1.1em; 
-            font-weight: bold; 
-            margin-bottom: 5px; 
-        }
-        
-        .demon-author { 
-            color: #888; 
-            font-size: 0.9em; 
-            margin-bottom: 3px;
-        }
-        
-        .demon-status {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 0.7em;
-            padding: 2px 6px;
-            border-radius: 3px;
-        }
-        
-        .status-verified { background: #22c55e; color: white; }
-        .status-pending { background: #eab308; color: black; }
-        .status-unverified { background: #ef4444; color: white; }
-        
-        /* МОДАЛЬНОЕ ОКНО */
         .modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
         }
-        
         .modal-content {
             background: #1a1a1a;
             padding: 20px;
             border-radius: 10px;
             max-width: 90%;
-            max-height: 80%;
-            overflow-y: auto;
-        }
-        
-        .close-btn {
-            float: right;
-            cursor: pointer;
-            font-size: 1.5em;
-        }
-        
-        .records-list {
-            margin-top: 10px;
-        }
-        
-        .record-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px;
-            margin-bottom: 5px;
-            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <div class="container">
-            <div class="header">
-                <h2>Sanich GDPS Demon List</h2>
-                <p>Всего демонов: {{ demons.length }}</p>
-            </div>
-            
-            <!-- СПИСОК ДЕМОНОВ -->
-            <div class="demon-card" 
-                 v-for="demon in demons" 
-                 :key="demon.id"
-                 @click="showDemonDetails(demon)">
-                <div class="demon-name">{{ demon.name }}</div>
-                <div class="demon-author">Автор: {{ demon.author }}</div>
-                <div class="demon-author">ID: {{ demon.id }}</div>
-                <div :class="['demon-status', getStatusClass(demon)]">
-                    {{ getStatusText(demon) }}
-                </div>
-            </div>
+    <div class="container">
+        <div class="header">
+            <h2>Sanich GDPS Demon List</h2>
+            <p>Всего демонов: <span id="demonCount">0</span></p>
         </div>
-        
-        <!-- МОДАЛЬНОЕ ОКНО С ДЕТАЛЯМИ -->
-        <div class="modal" v-if="selectedDemon" @click.self="selectedDemon = null">
-            <div class="modal-content">
-                <span class="close-btn" @click="selectedDemon = null">&times;</span>
-                <h2>{{ selectedDemon.name }}</h2>
-                <p><strong>ID:</strong> {{ selectedDemon.id }}</p>
-                <p><strong>Автор:</strong> {{ selectedDemon.author }}</p>
-                <p><strong>Создатели:</strong> {{ selectedDemon.creators.join(', ') }}</p>
-                <p><strong>Верификатор:</strong> {{ selectedDemon.verifier || 'Не указан' }}</p>
-                <p><strong>Статус:</strong> {{ getStatusText(selectedDemon) }}</p>
-                <p><strong>Пароль:</strong> {{ selectedDemon.password }}</p>
-                <p><strong>Проходной %:</strong> {{ selectedDemon.percentToQualify }}%</p>
-                
-                <div v-if="selectedDemon.verification">
-                    <p><strong>Верификация:</strong> 
-                        <a :href="selectedDemon.verification" target="_blank">Смотреть</a>
-                    </p>
-                </div>
-                
-                <!-- РЕКОРДЫ -->
-                <div class="records-list" v-if="selectedDemon.records && selectedDemon.records.length > 0">
-                    <h3>Рекорды ({{ selectedDemon.records.length }})</h3>
-                    <div class="record-item" v-for="record in selectedDemon.records" :key="record.user">
-                        <strong>{{ record.user }}</strong>: 
-                        <span v-if="record.percent">{{ record.percent }}%</span>
-                        <span v-if="record.time">Время: {{ record.time }}</span>
-                        <a v-if="record.link" :href="record.link" target="_blank"> [Видео]</a>
-                        <span v-if="record.comment"> - {{ record.comment }}</span>
-                    </div>
-                </div>
-                <div v-else>
-                    <p>Рекордов пока нет</p>
-                </div>
-            </div>
-        </div>
+        <div id="demonsList"></div>
     </div>
 
-    <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
     <script>
-        const { createApp } = Vue;
-        createApp({
-            data() {
-                return {
-                    selectedDemon: null,
-                    demons: [
-                        {
-                          "id": 185,
-                          "name": "Road to hell",
-                          "author": "DudeArctik",
-                          "creators": ["DudeArctik"],
-                          "verifier": "",
-                          "verification": "",
-                          "status": "In verification",
-                          "percentToQualify": 1,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "DudeArctik",
-                              "percent": 1.88,
-                              "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_attempt"
-                            },
-                            {
-                              "user": "Extreme", 
-                              "percent": 1.11,
-                              "link": "https://www.youtube.com/watch?v=link_to_Extreme_attempt"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 116,
-                          "name": "Silent Yatagista",
-                          "author": "DudeArctik", 
-                          "creators": ["DudeArctik", "Extreme", "Skrejj009"],
-                          "verifier": "",
-                          "verification": "",
-                          "status": "In verification",
-                          "percentToQualify": 10,
-                          "password": "Not Copyable",
-                          "records": [
-                            {
-                              "user": "Silent",
-                              "percent": 11,
-                              "link": "https://www.youtube.com/watch?v=MgJeijBGKHU"
-                            },
-                            {
-                              "user": "Skrejj009r",
-                              "percent": 19,
-                              "link": "https://www.youtube.com/watch?v=MgJeijBGKHU"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 113,
-                          "name": "Pulsar",
-                          "author": "Gdsher228",
-                          "creators": ["Gdsher228"],
-                          "verifier": "Gdsher228",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc", 
-                          "percentToQualify": 35,
-                          "password": "Free To Copy",
-                          "records": [
-                            {
-                              "user": "Skrejj009",
-                              "percent": 65,
-                              "link": "https://www.youtube.com/watch?v=link_to_players_video_1"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 101, 
-                          "name": "Fire hell",
-                          "author": "DudeArctik",
-                          "creators": ["DudeArctik", "Skrejj009r"],
-                          "verifier": "Skrejj009r",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "DudeArctik", 
-                              "percent": 46,
-                              "link": "https://www.youtube.com/watch?v=link_to_players_video_1"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 176,
-                          "name": "Love is",
-                          "author": "nocssnew",
-                          "creators": ["nocssnew"],
-                          "verifier": "nocssnew's friend", 
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "nocssnew's friend",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_friend_victory"
-                            },
-                            {
-                              "user": "Nagasaki",
-                              "percent": 100, 
-                              "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory",
-                              "comment": "возможно читер"
-                            },
-                            {
-                              "user": "Tonyeye",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
-                            },
-                            {
-                              "user": "DudeArctik",
-                              "percent": 2,
-                              "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_attempt" 
-                            }
-                          ]
-                        },
-                        {
-                          "id": 154,
-                          "name": "HeartBeat",
-                          "author": "Nagasaki",
-                          "creators": ["Nagasaki"],
-                          "verifier": "Zoink",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "Nagasaki",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
-                            },
-                            {
-                              "user": "Tonyeye",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 164,
-                          "name": "Sweet dream",
-                          "author": "Nagasaki", 
-                          "creators": ["Nagasaki"],
-                          "verifier": "Nagasaki",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": []
-                        },
-                        {
-                          "id": 158,
-                          "name": "every start",
-                          "author": "Max2526462",
-                          "creators": ["Max2526462"],
-                          "verifier": "Unknown",
-                          "verification": "No data",
-                          "percentToQualify": 35,
-                          "password": "free to copy", 
-                          "records": [
-                            {
-                              "user": "Nagasaki",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
-                            },
-                            {
-                              "user": "Tonyeye",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
-                            },
-                            {
-                              "user": "DudeArctik",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_victory"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 170,
-                          "name": "Hard demon",
-                          "author": "a11vaw",
-                          "creators": ["a11vaw"],
-                          "verifier": "a11vaw",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": []
-                        },
-                        {
-                          "id": 117,
-                          "name": "Silent",
-                          "author": "Extreme", 
-                          "creators": ["Extreme"],
-                          "verifier": "Extreme",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "Extreme",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=MgJeijBGKHU"
-                            },
-                            {
-                              "user": "Skrejj009",
-                              "percent": 99,
-                              "link": "https://www.youtube.com/watch?v=MgJeijBGKHU"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 140,
-                          "name": "Creo Sphere",
-                          "author": "Nagasaki",
-                          "creators": ["Nagasaki"],
-                          "verifier": "Nagasaki",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "Tonyeye",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
-                            },
-                            {
-                              "user": "Nagasaki", 
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 171,
-                          "name": "kocmoc",
-                          "author": "The4lovek",
-                          "creators": ["The4lovek"],
-                          "verifier": "Tonyeye",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "Extreme",
-                              "percent": 3,
-                              "link": "https://www.youtube.com/watch?v=link_to_Extreme_attempt",
-                              "comment": "Был занят, даже не пытался"
-                            },
-                            {
-                              "user": "Nagasaki",
-                              "percent": 100, 
-                              "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
-                            },
-                            {
-                              "user": "Tonyeye",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 195,
-                          "name": "When you find m3",
-                          "author": "Tonyeye",
-                          "creators": ["Tonyeye"],
-                          "verifier": "Tonyeye",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "DudeArctik",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_victory"
-                            }
-                          ]
-                        },
-                        {
-                          "id": 154,
-                          "name": "fallen angel",
-                          "author": "Nagasaki",
-                          "creators": ["Nagasaki"],
-                          "verifier": "zoink",
-                          "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-                          "percentToQualify": 35,
-                          "password": "free to copy",
-                          "records": [
-                            {
-                              "user": "Nagasaki",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
-                            },
-                            {
-                              "user": "Tonyeye",
-                              "percent": 100,
-                              "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
-      
+        // ТВОИ ДАННЫЕ ДЕМОНОВ ЗДЕСЬ...
+        const demons = [ /* вставь сюда весь JSON с демонами */ ];
+        
+        // ОТОБРАЖЕНИЕ ДЕМОНОВ
+        function renderDemons() {
+            const list = document.getElementById('demonsList');
+            const count = document.getElementById('demonCount');
+            
+            count.textContent = demons.length;
+            list.innerHTML = '';
+            
+            demons.forEach(demon => {
+                const card = document.createElement('div');
+                card.className = 'demon-card';
+                card.innerHTML = `
+                    <div style="font-weight: bold">${demon.name}</div>
+                    <div>Автор: ${demon.author}</div>
+                    <div>ID: ${demon.id}</div>
+                `;
+                card.onclick = () => showDemonDetails(demon);
+                list.appendChild(card);
+            });
+        }
+        
+        // ПОКАЗ ДЕТАЛЕЙ
+        function showDemonDetails(demon) {
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <h2>${demon.name}</h2>
+                <p><strong>ID:</strong> ${demon.id}</p>
+                <p><strong>Автор:</strong> ${demon.author}</p>
+                <p><strong>Пароль:</strong> ${demon.password}</p>
+                <button onclick="closeModal()">Закрыть</button>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        
+        // ЗАПУСК
+        renderDemons();
+    </script>
+</body>
+</html>
