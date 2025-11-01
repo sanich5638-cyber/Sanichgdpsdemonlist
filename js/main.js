@@ -339,74 +339,31 @@ const app = Vue.createApp({
         }
     },
     
-    },  // ← это закрывает data()
-    
-computed: {
-  processedDemons() {
-    let demons = [...this.demons];
-    
-    // 1. Сначала сортируем по позиции
-    demons.sort((a, b) => a.position - b.position);
-    
-    // 2. Потом поиск (если есть)
-    if (this.searchQuery) {
-      const query = this.searchQuery.toLowerCase();
-      demons = demons.filter(demon =>
-        demon.name.toLowerCase().includes(query) ||
-        demon.author.toLowerCase().includes(query)
-      );
-    }
-    
-    // 3. Дополнительная сортировка если НЕ position
-    if (this.sortBy === 'name') {
-      demons.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (this.sortBy === 'difficulty') {
-      demons.sort((a, b) => a.percentToQualify - b.percentToQualify);
-    }
-    
-    return demons;
-  },
-  
-  stats() {
-    return {
-      total: this.demons.length,
-      verified: this.demons.filter(d => d.verifier && d.verification).length,
-      inVerification: this.demons.filter(d => d.status && d.status.includes('verification')).length,
-      platformers: this.demons.filter(d => d.levelType === 'Platformer').length
-    };
-  }
-},  // ← это закрывает computed
-
-// УБРАТЬ лишнее:
-// },
-//
-// // Статистика
-// stats() {
-//     return {
-//         total: this.demons.length,
-  },
-  
-  stats() {
-    return {
-      total: this.demons.length,
-      verified: this.demons.filter(d => d.verifier && d.verification).length,
-      inVerification: this.demons.filter(d => d.status && d.status.includes('verification')).length,
-      platformers: this.demons.filter(d => d.levelType === 'Platformer').length
-    };
-  }
-},
-    },
-
-    // Статистика
-    stats() {
-        return {
-            total: this.demons.length,
-            verified: this.demons.filter(d => d.verifier && d.verification).length,
-            inVerification: this.demons.filter(d => d.status && d.status.includes('verification')).length,
-            platformers: this.demons.filter(d => d.levelType === 'Platformer').length
-        };
-    }
-},
+    computed: {
+        // Фильтрация и сортировка демонов
+        processedDemons() {
+            let demons = [...this.demons];
+            
+            // 1. СНАЧАЛА ВСЕГДА сортируем по позиции
+            demons.sort((a, b) => a.position - b.position);
+            
+            // 2. ПОТОМ поиск (если есть)
+            if (this.searchQuery) {
+                const query = this.searchQuery.toLowerCase();
+                demons = demons.filter(demon => 
+                    demon.name.toLowerCase().includes(query) ||
+                    demon.author.toLowerCase().includes(query)
+                );
+            }
+            
+            // 3. ДОПОЛНИТЕЛЬНАЯ сортировка если НЕ position
+            if (this.sortBy === 'name') {
+                demons.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (this.sortBy === 'difficulty') {
+                demons.sort((a, b) => a.percentToQualify - b.percentToQualify);
+            }
+            
+            return demons;
         },
         
         // Статистика
@@ -467,18 +424,12 @@ computed: {
                 return record.time;
             }
             return `${record.percent}%`;
-        },
-        
-        // Проверка есть ли верификация
-        hasVerification(demon) {
-            return demon.verification && demon.verification !== 'No data';
         }
     },
     
     mounted() {
         console.log('GD Demon List loaded successfully!');
         console.log(`Loaded ${this.demons.length} demons`);
-        console.log('Stats:', this.stats);
     }
 });
 
