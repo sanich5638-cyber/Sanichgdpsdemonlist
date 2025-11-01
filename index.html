@@ -43,7 +43,7 @@
             font-size: 0.9em;
         }
 
-        /* Стиль ТОЧЬ-В-ТОЧЬ как в GD Demon List */
+        /* Стиль демон-листа */
         .demon-list {
             background: #0a0a0a;
         }
@@ -87,54 +87,52 @@
             font-size: 0.85em;
         }
 
-        /* Разделитель как в GD */
-        .divider {
-            height: 1px;
-            background: #1a1a1a;
-            margin: 8px 0;
-        }
-
-        /* Модальное окно */
+        /* Модальное окно в стиле Pointercrate */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            padding: 15px;
+            padding: 10px;
         }
 
         .modal-content {
             background: #0a0a0a;
             border: 1px solid #333;
-            padding: 20px;
-            max-width: 500px;
+            max-width: 800px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
         }
 
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            background: #111;
+            padding: 20px;
             border-bottom: 1px solid #333;
         }
 
         .modal-title {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .modal-subtitle {
+            color: #888;
+            font-size: 1em;
         }
 
         .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
             background: none;
             border: none;
             color: #888;
@@ -142,54 +140,72 @@
             cursor: pointer;
         }
 
-        .demon-info {
-            margin-bottom: 15px;
+        .modal-body {
+            padding: 20px;
         }
 
-        .info-row {
-            margin-bottom: 6px;
-            display: flex;
-            flex-wrap: wrap;
+        .info-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #ffffff;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #333;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-item {
+            margin-bottom: 10px;
         }
 
         .info-label {
             color: #888;
-            min-width: 100px;
             font-size: 0.9em;
+            margin-bottom: 3px;
         }
 
         .info-value {
             color: #ffffff;
-            flex: 1;
-            font-size: 0.9em;
-        }
-
-        .records-section {
-            margin-top: 15px;
-        }
-
-        .records-title {
-            color: #ffffff;
-            margin-bottom: 8px;
-            font-weight: bold;
             font-size: 1em;
         }
 
-        .record-item {
+        .records-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .records-table th {
             background: #111;
-            padding: 8px;
-            margin-bottom: 5px;
-            font-size: 0.85em;
+            color: #888;
+            padding: 8px 12px;
+            text-align: left;
+            font-weight: normal;
+            font-size: 0.9em;
+            border-bottom: 1px solid #333;
+        }
+
+        .records-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #222;
+            font-size: 0.9em;
         }
 
         .record-user {
-            font-weight: bold;
             color: #ffffff;
-            margin-bottom: 2px;
         }
 
-        .record-details {
-            color: #888;
+        .record-progress {
+            color: #4ecdc4;
         }
 
         .record-link {
@@ -197,23 +213,22 @@
             text-decoration: none;
         }
 
-        /* Адаптивность для телефона */
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 5px;
-            }
-            
-            .main-title {
-                font-size: 1.6em;
-            }
-            
-            .demon-item {
-                padding: 10px 12px;
+        .record-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
             }
             
             .modal-content {
-                padding: 15px;
                 margin: 5px;
+            }
+            
+            .modal-body {
+                padding: 15px;
             }
         }
     </style>
@@ -228,7 +243,7 @@
                 </div>
             </div>
 
-            <!-- Список демонов В СТИЛЕ GD -->
+            <!-- Список демонов -->
             <div class="demon-list">
                 <div class="demon-item" 
                      v-for="demon in processedDemons" 
@@ -238,52 +253,104 @@
                     <div class="demon-position">#{{ demon.position }} - {{ demon.name }}</div>
                     <div class="demon-author">published by {{ demon.author }}</div>
                     <div class="demon-progress">{{ getDemonProgress(demon) }} points</div>
-                    
-                    <div class="divider"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Модальное окно с деталями -->
+        <!-- Модальное окно В СТИЛЕ POINTERCRATE -->
         <div class="modal-overlay" v-if="selectedDemon" @click="closeModal">
             <div class="modal-content" @click.stop>
+                <button class="close-btn" @click="closeModal">×</button>
+                
                 <div class="modal-header">
-                    <h2 class="modal-title">{{ selectedDemon.name }}</h2>
-                    <button class="close-btn" @click="closeModal">×</button>
+                    <h1 class="modal-title">{{ selectedDemon.name }}</h1>
+                    <div class="modal-subtitle">published by {{ selectedDemon.author }}</div>
                 </div>
 
-                <div class="demon-info">
-                    <div class="info-row">
-                        <span class="info-label">Position:</span>
-                        <span class="info-value">#{{ selectedDemon.position }}</span>
+                <div class="modal-body">
+                    <!-- Основная информация -->
+                    <div class="info-section">
+                        <h2 class="section-title">Level Information</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Level Password</div>
+                                <div class="info-value">{{ selectedDemon.password }}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Level ID</div>
+                                <div class="info-value">{{ selectedDemon.id }}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Verifier</div>
+                                <div class="info-value">{{ selectedDemon.verifier || 'Not verified' }}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Creators</div>
+                                <div class="info-value">{{ selectedDemon.creators.join(', ') }}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Qualify %</div>
+                                <div class="info-value">{{ selectedDemon.percentToQualify }}%</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Status</div>
+                                <div class="info-value">{{ getStatusText(selectedDemon) }}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">Author:</span>
-                        <span class="info-value">{{ selectedDemon.author }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Creators:</span>
-                        <span class="info-value">{{ selectedDemon.creators.join(', ') }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Password:</span>
-                        <span class="info-value">{{ selectedDemon.password }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Qualify:</span>
-                        <span class="info-value">{{ selectedDemon.percentToQualify }}%</span>
-                    </div>
-                </div>
 
-                <!-- Рекорды -->
-                <div class="records-section" v-if="selectedDemon.records && selectedDemon.records.length > 0">
-                    <h3 class="records-title">Records</h3>
-                    <div class="record-item" v-for="(record, index) in selectedDemon.records" :key="index">
-                        <div class="record-user">{{ record.user }}</div>
-                        <div class="record-details">
-                            {{ getRecordDisplay(record, selectedDemon.levelType) }}
-                            <a v-if="record.link" :href="record.link" target="_blank" class="record-link">[Video]</a>
-                            <span v-if="record.comment"> - {{ record.comment }}</span>
+                    <!-- Demonlist Scores -->
+                    <div class="info-section">
+                        <h2 class="section-title">Demonlist Scores</h2>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Score (100%)</div>
+                                <div class="info-value">{{ calculateScore(selectedDemon, 100) }}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Score ({{ selectedDemon.percentToQualify }}%)</div>
+                                <div class="info-value">{{ calculateScore(selectedDemon, selectedDemon.percentToQualify) }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Records -->
+                    <div class="info-section">
+                        <h2 class="section-title">
+                            Records 
+                            <span style="color: #888; font-size: 0.8em; font-weight: normal;">
+                                ({{ selectedDemon.records ? selectedDemon.records.length : 0 }} records registered)
+                            </span>
+                        </h2>
+                        
+                        <div v-if="selectedDemon.records && selectedDemon.records.length > 0">
+                            <table class="records-table">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th>Progress</th>
+                                        <th>Video</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(record, index) in selectedDemon.records" :key="index">
+                                        <td class="record-user">{{ record.user }}</td>
+                                        <td class="record-progress">
+                                            {{ getRecordDisplay(record, selectedDemon.levelType) }}
+                                            <span v-if="record.comment" style="color: #888; font-size: 0.8em;">
+                                                - {{ record.comment }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a v-if="record.link" :href="record.link" target="_blank" class="record-link">Watch</a>
+                                            <span v-else style="color: #888">No video</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div v-else style="color: #888; text-align: center; padding: 20px;">
+                            No records yet
                         </div>
                     </div>
                 </div>
@@ -291,7 +358,6 @@
         </div>
     </div>
 
-    <!-- ПОДКЛЮЧЕНИЕ ТВОЕГО JS -->
     <script src="js/main.js"></script>
 </body>
-        </html>
+    </html>
