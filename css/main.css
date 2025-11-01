@@ -262,3 +262,27 @@ body {
         transform: translateX(5px);
     }
     }
+/* ===== ИСПРАВЛЕНИЕ Level Information ===== */
+.info-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+    border-bottom: 1px solid #222 !important;
+    padding-bottom: 8px !important;
+}
+
+.info-label {
+    color: #888 !important;
+    font-size: 0.9em !important;
+    font-weight: bold !important;
+    min-width: 120px !important;
+    margin-bottom: 0 !important;
+}
+
+.info-value {
+    color: #ffffff !important;
+    font-size: 1em !important;
+    text-align: right !important;
+    flex: 1 !important;
+}
