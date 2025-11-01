@@ -1,288 +1,390 @@
-/* ===== ОБНОВЛЁННЫЕ СТИЛИ С ПЕРЕХОДАМИ ===== */
-
-/* Плавные переходы для всех элементов */
+/* main.css - Pointercrate Style */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.3s ease;
 }
 
 body {
-    background: #000000;
-    font-family: 'Arial', sans-serif;
+    background: #0c0c0c;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #ffffff;
-    line-height: 1.3;
-    padding: 10px;
-    min-height: 100vh;
+    line-height: 1.4;
+    padding: 0;
 }
 
-/* Плавное появление контейнера */
 .container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
-    animation: fadeIn 0.5s ease;
+    padding: 20px;
 }
 
-/* Анимация появления */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== ШАПКА С ПЕРЕХОДАМИ ===== */
+/* ===== HEADER ===== */
 .header {
     text-align: center;
-    margin-bottom: 20px;
-    padding: 15px 0;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s ease;
-}
-
-.header:hover {
-    border-bottom-color: #2a2a2a;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 1px solid #1a1a1a;
 }
 
 .main-title {
-    font-size: 2em;
-    font-weight: bold;
+    font-size: 2.5em;
+    font-weight: 700;
     color: #ffffff;
-    margin-bottom: 5px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    transition: text-shadow 0.3s ease;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
 }
 
-.main-title:hover {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.9em;
+    color: #888;
 }
 
-/* ===== КАРТОЧКИ ДЕМОНОВ С ПЛАВНЫМИ ПЕРЕХОДАМИ ===== */
-.demon-item {
-    padding: 12px 15px;
-    border-bottom: 1px solid #1a1a1a;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
+.demon-count {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.stat-verified {
+    color: #27ae60;
+}
+
+.stat-pending {
+    color: #f39c12;
+}
+
+.stat-platformers {
+    color: #9b59b6;
+}
+
+/* ===== CONTROLS ===== */
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #2a2a2a;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 15px;
+    background: #0c0c0c;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #e74c3c;
+}
+
+.sort-select {
+    padding: 10px 15px;
+    background: #0c0c0c;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+}
+
+/* ===== DEMON LIST ===== */
+.demon-list {
+    background: #1a1a1a;
+    border-radius: 8px;
+    border: 1px solid #2a2a2a;
     overflow: hidden;
 }
 
-.demon-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.demon-item:hover::before {
-    left: 100%;
+.demon-item {
+    padding: 18px 20px;
+    border-bottom: 1px solid #2a2a2a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .demon-item:hover {
-    background: #111111;
-    transform: translateX(8px);
-    border-left: 3px solid #ff6b6b;
+    background: #252525;
 }
 
-/* Плавное появление элементов внутри карточки */
+.demon-item:last-child {
+    border-bottom: none;
+}
+
 .demon-position {
-    color: #ff6b6b;
-    font-weight: bold;
-    font-size: 1em;
-    margin-bottom: 2px;
-    transition: color 0.3s ease;
-}
-
-.demon-item:hover .demon-position {
-    color: #ff8e8e;
+    color: #e74c3c;
+    font-weight: 700;
+    font-size: 1.1em;
+    margin-bottom: 5px;
 }
 
 .demon-name {
+    font-size: 1.3em;
+    font-weight: 600;
     color: #ffffff;
-    font-size: 1em;
-    margin-bottom: 2px;
-    transition: transform 0.3s ease;
-}
-
-.demon-item:hover .demon-name {
-    transform: translateX(5px);
+    margin-bottom: 3px;
 }
 
 .demon-author {
-    color: #888888;
-    font-size: 0.9em;
-    margin-bottom: 3px;
-    transition: color 0.3s ease;
-}
-
-.demon-item:hover .demon-author {
-    color: #aaaaaa;
+    color: #888;
+    font-size: 0.95em;
+    margin-bottom: 8px;
 }
 
 .demon-progress {
-    color: #4ecdc4;
-    font-size: 0.85em;
-    transition: all 0.3s ease;
+    color: #3498db;
+    font-size: 0.9em;
+    font-weight: 500;
 }
 
-.demon-item:hover .demon-progress {
-    color: #6ffcf2;
-    transform: translateX(3px);
-}
-
-/* ===== МОДАЛЬНОЕ ОКНО С АНИМАЦИЕЙ ===== */
+/* ===== MODAL ===== */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    padding: 10px;
-    animation: overlayFadeIn 0.3s ease forwards;
-}
-
-@keyframes overlayFadeIn {
-    to {
-        background: rgba(0, 0, 0, 0.95);
-    }
+    padding: 20px;
 }
 
 .modal-content {
-    background: #0a0a0a;
+    background: #1a1a1a;
     border: 1px solid #333;
-    max-width: 800px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
     border-radius: 8px;
-    transform: scale(0.9);
-    opacity: 0;
-    animation: modalSlideIn 0.3s ease 0.1s forwards;
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
-@keyframes modalSlideIn {
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
+.modal-header {
+    background: #252525;
+    padding: 25px;
+    border-bottom: 1px solid #333;
+    position: relative;
 }
 
-/* Плавное закрытие модалки */
-.modal-overlay.leaving {
-    animation: overlayFadeOut 0.3s ease forwards;
+.modal-title {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
 }
 
-@keyframes overlayFadeOut {
-    from {
-        background: rgba(0, 0, 0, 0.95);
-    }
-    to {
-        background: rgba(0, 0, 0, 0);
-    }
+.modal-subtitle {
+    color: #888;
+    font-size: 1.1em;
 }
 
-.modal-content.leaving {
-    animation: modalSlideOut 0.3s ease forwards;
-}
-
-@keyframes modalSlideOut {
-    to {
-        transform: scale(0.9);
-        opacity: 0;
-    }
-}
-
-/* ===== ПЛАВНЫЕ ИНПУТЫ ===== */
-.search-input, .sort-select {
-    transition: all 0.3s ease;
-    border: 1px solid #333;
-}
-
-.search-input:focus, .sort-select:focus {
-    border-color: #4ecdc4;
-    box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.2);
-    transform: translateY(-1px);
-}
-
-/* ===== ПЛАВНЫЕ КНОПКИ ===== */
 .close-btn {
-    transition: all 0.3s ease;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.8em;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .close-btn:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transform: rotate(90deg);
+    color: #ffffff;
 }
 
-/* ===== ПЛАВНЫЕ ССЫЛКИ ===== */
-.record-link {
-    transition: all 0.3s ease;
+.modal-body {
+    padding: 25px;
 }
 
-.record-link:hover {
-    background: #4ecdc4;
-    color: #000;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-/* ===== ПЛАВНОЕ ПОЯВЛЕНИЕ ЭЛЕМЕНТОВ В МОДАЛКЕ ===== */
+/* ===== INFO SECTIONS ===== */
 .info-section {
-    animation: fadeInUp 0.4s ease;
+    margin-bottom: 30px;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.section-title {
+    color: #ffffff;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
 }
 
-/* Задержки для последовательного появления */
-.info-section:nth-child(1) { animation-delay: 0.1s; }
-.info-section:nth-child(2) { animation-delay: 0.2s; }
-.info-section:nth-child(3) { animation-delay: 0.3s; }
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
 
-/* Адаптивность сохраняется */
-@media (max-width: 768px) {
-    .demon-item:hover {
-        transform: translateX(5px);
-    }
-    }
-/* ===== ИСПРАВЛЕНИЕ Level Information ===== */
 .info-item {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    margin-bottom: 10px !important;
-    border-bottom: 1px solid #222 !important;
-    padding-bottom: 8px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #2a2a2a;
 }
 
 .info-label {
-    color: #888 !important;
-    font-size: 0.9em !important;
-    font-weight: bold !important;
-    min-width: 120px !important;
-    margin-bottom: 0 !important;
+    color: #888;
+    font-size: 0.95em;
+    font-weight: 500;
+    min-width: 140px;
 }
 
 .info-value {
-    color: #ffffff !important;
-    font-size: 1em !important;
-    text-align: right !important;
-    flex: 1 !important;
+    color: #ffffff;
+    font-size: 0.95em;
+    text-align: right;
+    flex: 1;
 }
+
+/* ===== RECORDS TABLE ===== */
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.records-table th {
+    background: #252525;
+    color: #888;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 0.9em;
+    border-bottom: 1px solid #333;
+}
+
+.records-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #2a2a2a;
+    font-size: 0.9em;
+}
+
+.record-user {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.record-progress {
+    color: #3498db;
+}
+
+.record-link {
+    color: #e74c3c;
+    text-decoration: none;
+    padding: 4px 8px;
+    border: 1px solid #e74c3c;
+    border-radius: 3px;
+    font-size: 0.8em;
+    transition: all 0.2s ease;
+}
+
+.record-link:hover {
+    background: #e74c3c;
+    color: #ffffff;
+}
+
+/* ===== STATUS BADGES ===== */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-verified {
+    background: #27ae60;
+    color: white;
+}
+
+.status-pending {
+    background: #f39c12;
+    color: black;
+}
+
+.status-unverified {
+    background: #e74c3c;
+    color: white;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .main-title {
+        font-size: 2em;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 10px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .records-table {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 15px 0;
+    }
+    
+    .main-title {
+        font-size: 1.8em;
+    }
+    
+    .stats {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .demon-item {
+        padding: 15px;
+    }
+    
+    .modal-header {
+        padding: 20px;
+    }
+    
+    .modal-title {
+        font-size: 1.5em;
+    }
+    }
