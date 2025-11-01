@@ -4,43 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanich GDPS Demon List</title>
+    <link rel="stylesheet" href="main.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
     <div id="app">
-        <h1>Sanich GDPS Demon List</h1>
-        <p>Всего демонов: {{ demons.length }}</p>
-        
-        <div v-if="demons.length > 0">
-            <div v-for="demon in demons" :key="demon.id" 
-                 style="background: #333; padding: 10px; margin: 5px; cursor: pointer;"
-                 @click="currentDemon = demon">
-                {{ demon.name }} by {{ demon.author }}
+        <div class="container">
+            <div class="header">
+                <h1 class="main-title">Sanich GDPS Demon List</h1>
+                <div class="stats">
+                    <span class="demon-count">Всего: {{ stats.total }}</span>
+                    <span class="stat-verified">✓ {{ stats.verified }}</span>
+                    <span class="stat-pending">⏳ {{ stats.inVerification }}</span>
+                    <span v-if="stats.platformers > 0" class="stat-platformers">🎮 {{ stats.platformers }}</span>
+                </div>
+            </div>
+
+            <!-- Поиск и сортировка -->
+            <div class="controls">
+                <input type="text" v-model="searchQuery" placeholder="Поиск демонов..." class="search-input">
+                <select v-model="sortBy" class="sort-select">
+                    <option value="position">По позиции</option>
+                    <option value="name">По названию</option>
+                    <option value="difficulty">По сложности</option>
+                </select>
+            </div>
+
+            <!-- Список демонов -->
+            <div class="demon-list">
+                <div class="demon-item" 
+                     v-for="demon in processedDemons" 
+                     :key="demon.id"
+                     @click="selectDemon(demon)">
+                    
+                    <div class="demon-position">#{{ demon.position }}</div>
+                    <div class="demon-name">{{ demon.name }}</div>
+                    <div class="demon-author">published by {{ demon.author }}</div>
+                    <div class="demon-progress">{{ getDemonProgress(demon) }}</div>
+                    
+                    <div :class="['status-badge', getStatusClass(demon)]">
+                        {{ getStatusText(demon) }}
+                    </div>
+                </div>
             </div>
         </div>
-        <div v-else>
-            <p style="color: red;">Демоны не загружены! Проверь консоль (F12)</p>
+
+        <!-- Модальное окно с деталями -->
+        <div class="modal-overlay" v-if="selectedDemon" @click="closeModal">
+            <div class="modal-content" @click.stop>
+                <div class="modal-header">
+                    <h2 class="modal-title">{{ selectedDemon.name }}</h2>
+                    <button class="close-btn" @click="closeModal">×</button>
+                </div>
+
+                <div class="demon-info">
+                    <div class="info-row">
+                        <span class="info-label">Position:</span>
+                        <span class="info-value">#{{ selectedDemon.position }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Author:</span>
+                        <span class="info-value">{{ selectedDemon.author }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Creators:</span>
+                        <span class="info-value">{{ selectedDemon.creators.join(', ') }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Status:</span>
+                        <span class="info-value">
+                            <span :class="['status-badge', getStatusClass(selectedDemon)]">
+                                {{ getStatusText(selectedDemon) }}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Password:</span>
+                        <span class="info-value">{{ selectedDemon.password }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Qualify %:</span>
+                        <span class="info-value">{{ selectedDemon.percentToQualify }}%</span>
+                    </div>
+                    
+                    <div v-if="hasVerification(selectedDemon)" class="info-row">
+                        <span class="info-label">Verification:</span>
+                        <span class="info-value">
+                            <a :href="selectedDemon.verification" target="_blank" class="record-link">Watch</a>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Рекорды -->
+                <div class="records-section" v-if="selectedDemon.records && selectedDemon.records.length > 0">
+                    <h3 class="records-title">Records ({{ selectedDemon.records.length }})</h3>
+                    <div class="record-item" v-for="(record, index) in selectedDemon.records" :key="index">
+                        <div class="record-user">{{ record.user }}</div>
+                        <div class="record-details">
+                            {{ getRecordDisplay(record, selectedDemon.levelType) }}
+                            <a v-if="record.link" :href="record.link" target="_blank" class="record-link">[Video]</a>
+                            <span v-if="record.comment"> - {{ record.comment }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="records-section">
+                    <p>No records yet</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        // ПРОСТОЙ ТЕСТ - 2 демона для проверки
-        const testDemons = [
-            { id: 1, name: "Test Demon 1", author: "Test Author" },
-            { id: 2, name: "Test Demon 2", author: "Test Author 2" }
-        ];
-
-        const app = Vue.createApp({
-            data() {
-                return {
-                    demons: testDemons,
-                    currentDemon: null
-                }
-            }
-        }).mount('#app');
-
-        console.log('Vue app mounted:', app);
-        console.log('Demons loaded:', app.demons);
-    </script>
+    <script src="script.js"></script>
 </body>
-</html>
+    </html>
