@@ -1,0 +1,27 @@
+{
+  "id": 134,
+  "name": "Purgatori",
+  "author": "Max2526362",
+  "creators": ["Max2526362"],
+  "verifier": "Unknown",
+  "verification": "",
+  "percentToQualify": 35,
+  "password": "free to copy",
+  "records": [
+    {
+      "user": "Nagasaki",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
+    },
+    {
+      "user": "Gogolik22",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Gogolik22_victory"
+    },
+    {
+      "user": "Tonyeye",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
+    }
+  ]
+}

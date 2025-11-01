@@ -1,0 +1,28 @@
+{
+  "id": 171,
+  "name": "kocmoc",
+  "author": "The4lovek",
+  "creators": ["The4lovek"],
+  "verifier": "Tonyeye",
+  "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
+  "percentToQualify": 35,
+  "password": "free to copy",
+  "records": [
+    {
+      "user": "Extreme",
+      "percent": 3,
+      "link": "https://www.youtube.com/watch?v=link_to_Extreme_attempt",
+      "comment": "Был занят, даже не пытался"
+    },
+    {
+      "user": "Nagasaki",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
+    },
+    {
+      "user": "Tonyeye",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
+    }
+  ]
+}

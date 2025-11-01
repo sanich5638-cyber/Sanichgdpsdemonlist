@@ -1,0 +1,23 @@
+{
+  "id": 185,
+  "name": "Road to hell",
+  "author": "DudeArctik",
+  "creators": ["DudeArctik"],
+  "verifier": "",
+  "verification": "",
+  "status": "In verification",
+  "percentToQualify": 1,
+  "password": "free to copy",
+  "records": [
+    {
+      "user": "DudeArctik",
+      "percent": 1.88,
+      "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_attempt"
+    },
+    {
+      "user": "Extreme",
+      "percent": 1.11,
+      "link": "https://www.youtube.com/watch?v=link_to_Extreme_attempt"
+    }
+  ]
+}

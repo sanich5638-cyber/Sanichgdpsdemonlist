@@ -1,0 +1,37 @@
+{
+  "id": 133,
+  "name": "Blaster temple",
+  "author": "Max2526462",
+  "creators": ["Max2526462"],
+  "verifier": "Extreme",
+  "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
+  "percentToQualify": 35,
+  "password": "free to copy",
+  "records": [
+    {
+      "user": "Gogolik22",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Gogolik22_victory"
+    },
+    {
+      "user": "Tonyeye",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
+    },
+    {
+      "user": "Nagasaki",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory"
+    },
+    {
+      "user": "Max2526462",
+      "percent": 7,
+      "link": "https://www.youtube.com/watch?v=link_to_Max2526462_attempt"
+    },
+    {
+      "user": "DudeArctik",
+      "percent": 7,
+      "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_attempt"
+    }
+  ]
+}

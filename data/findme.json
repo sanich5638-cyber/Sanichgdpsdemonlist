@@ -1,0 +1,17 @@
+{
+  "id": 195,
+  "name": "When you find m3",
+  "author": "Tonyeye",
+  "creators": ["Tonyeye"],
+  "verifier": "Tonyeye",
+  "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
+  "percentToQualify": 35,
+  "password": "free to copy",
+  "records": [
+    {
+      "user": "DudeArctik",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_victory"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": 176,
+  "name": "Love is",
+  "author": "nocssnew",
+  "creators": ["nocssnew"],
+  "verifier": "nocssnew's friend",
+  "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
+  "percentToQualify": 35,
+  "password": "free to copy",
+  "records": [
+    {
+      "user": "nocssnew's friend",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_friend_victory"
+    },
+    {
+      "user": "Nagasaki",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Nagasaki_victory",
+      "comment": "возможно читер"
+    },
+    {
+      "user": "Tonyeye",
+      "percent": 100,
+      "link": "https://www.youtube.com/watch?v=link_to_Tonyeye_victory"
+    },
+    {
+      "user": "DudeArctik",
+      "percent": 2,
+      "link": "https://www.youtube.com/watch?v=link_to_DudeArctik_attempt"
+    }
+  ]
+}
