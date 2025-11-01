@@ -226,8 +226,8 @@ const demonsData = [
         creators: ["Nocssnew"],
         position: 15,
         verification: "",
-        verifier: "",
-        status: "Unverified",
+        verifier: "Gogolik22",
+        status: "Verified",
         percentToQualify: 35,
         password: "free to copy",
         records: []
