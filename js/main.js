@@ -413,12 +413,11 @@ const app = Vue.createApp({
             return `0% — 100%`;
         },
         
-        // Получение лучшего рекорда
-        getBestRecord(demon) {
-            if (!demon.records || demon.records.length === 0) return null;
-            return demon.records.reduce((best, current) => 
-                current.percent > best.percent ? current : best
-            );
+        // Расчет очков для демон-листа
+        calculateScore(demon, percent) {
+            // Простая формула для демо
+            const baseScore = 1000 - (demon.position * 45);
+            return (baseScore * (percent / 100)).toFixed(2);
         },
         
         // Отображение рекорда (проценты или время)
