@@ -4,8 +4,219 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanich GDPS Demon List</title>
-    <link rel="stylesheet" href="main.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            line-height: 1.3;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px 0;
+        }
+
+        .main-title {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .stats {
+            color: #888888;
+            font-size: 0.9em;
+        }
+
+        /* Стиль ТОЧЬ-В-ТОЧЬ как в GD Demon List */
+        .demon-list {
+            background: #0a0a0a;
+        }
+
+        .demon-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #1a1a1a;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .demon-item:hover {
+            background: #111111;
+        }
+
+        .demon-item:last-child {
+            border-bottom: none;
+        }
+
+        .demon-position {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1em;
+            margin-bottom: 2px;
+        }
+
+        .demon-name {
+            color: #ffffff;
+            font-size: 1em;
+            margin-bottom: 2px;
+        }
+
+        .demon-author {
+            color: #888888;
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+
+        .demon-progress {
+            color: #cccccc;
+            font-size: 0.85em;
+        }
+
+        /* Разделитель как в GD */
+        .divider {
+            height: 1px;
+            background: #1a1a1a;
+            margin: 8px 0;
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .modal-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .demon-info {
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            margin-bottom: 6px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .info-label {
+            color: #888;
+            min-width: 100px;
+            font-size: 0.9em;
+        }
+
+        .info-value {
+            color: #ffffff;
+            flex: 1;
+            font-size: 0.9em;
+        }
+
+        .records-section {
+            margin-top: 15px;
+        }
+
+        .records-title {
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .record-item {
+            background: #111;
+            padding: 8px;
+            margin-bottom: 5px;
+            font-size: 0.85em;
+        }
+
+        .record-user {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .record-details {
+            color: #888;
+        }
+
+        .record-link {
+            color: #4ecdc4;
+            text-decoration: none;
+        }
+
+        /* Адаптивность для телефона */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 5px;
+            }
+            
+            .main-title {
+                font-size: 1.6em;
+            }
+            
+            .demon-item {
+                padding: 10px 12px;
+            }
+            
+            .modal-content {
+                padding: 15px;
+                margin: 5px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -13,38 +224,22 @@
             <div class="header">
                 <h1 class="main-title">Sanich GDPS Demon List</h1>
                 <div class="stats">
-                    <span class="demon-count">Всего: {{ stats.total }}</span>
-                    <span class="stat-verified">✓ {{ stats.verified }}</span>
-                    <span class="stat-pending">⏳ {{ stats.inVerification }}</span>
-                    <span v-if="stats.platformers > 0" class="stat-platformers">🎮 {{ stats.platformers }}</span>
+                    Total: {{ stats.total }} demons
                 </div>
             </div>
 
-            <!-- Поиск и сортировка -->
-            <div class="controls">
-                <input type="text" v-model="searchQuery" placeholder="Поиск демонов..." class="search-input">
-                <select v-model="sortBy" class="sort-select">
-                    <option value="position">По позиции</option>
-                    <option value="name">По названию</option>
-                    <option value="difficulty">По сложности</option>
-                </select>
-            </div>
-
-            <!-- Список демонов -->
+            <!-- Список демонов В СТИЛЕ GD -->
             <div class="demon-list">
                 <div class="demon-item" 
                      v-for="demon in processedDemons" 
                      :key="demon.id"
                      @click="selectDemon(demon)">
                     
-                    <div class="demon-position">#{{ demon.position }}</div>
-                    <div class="demon-name">{{ demon.name }}</div>
+                    <div class="demon-position">#{{ demon.position }} - {{ demon.name }}</div>
                     <div class="demon-author">published by {{ demon.author }}</div>
-                    <div class="demon-progress">{{ getDemonProgress(demon) }}</div>
+                    <div class="demon-progress">{{ getDemonProgress(demon) }} points</div>
                     
-                    <div :class="['status-badge', getStatusClass(demon)]">
-                        {{ getStatusText(demon) }}
-                    </div>
+                    <div class="divider"></div>
                 </div>
             </div>
         </div>
@@ -71,33 +266,18 @@
                         <span class="info-value">{{ selectedDemon.creators.join(', ') }}</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Status:</span>
-                        <span class="info-value">
-                            <span :class="['status-badge', getStatusClass(selectedDemon)]">
-                                {{ getStatusText(selectedDemon) }}
-                            </span>
-                        </span>
-                    </div>
-                    <div class="info-row">
                         <span class="info-label">Password:</span>
                         <span class="info-value">{{ selectedDemon.password }}</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Qualify %:</span>
+                        <span class="info-label">Qualify:</span>
                         <span class="info-value">{{ selectedDemon.percentToQualify }}%</span>
-                    </div>
-                    
-                    <div v-if="hasVerification(selectedDemon)" class="info-row">
-                        <span class="info-label">Verification:</span>
-                        <span class="info-value">
-                            <a :href="selectedDemon.verification" target="_blank" class="record-link">Watch</a>
-                        </span>
                     </div>
                 </div>
 
                 <!-- Рекорды -->
                 <div class="records-section" v-if="selectedDemon.records && selectedDemon.records.length > 0">
-                    <h3 class="records-title">Records ({{ selectedDemon.records.length }})</h3>
+                    <h3 class="records-title">Records</h3>
                     <div class="record-item" v-for="(record, index) in selectedDemon.records" :key="index">
                         <div class="record-user">{{ record.user }}</div>
                         <div class="record-details">
@@ -107,9 +287,6 @@
                         </div>
                     </div>
                 </div>
-                <div v-else class="records-section">
-                    <p>No records yet</p>
-                </div>
             </div>
         </div>
     </div>
@@ -117,4 +294,4 @@
     <!-- ПОДКЛЮЧЕНИЕ ТВОЕГО JS -->
     <script src="js/main.js"></script>
 </body>
-            </html>
+        </html>
