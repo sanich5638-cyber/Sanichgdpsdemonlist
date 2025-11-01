@@ -225,7 +225,7 @@ const demonsData = [
         author: "Gogolik22",
         creators: ["Nocssnew"],
         position: 15,
-        verification: "",
+        verification: "https://vm.tiktok.com/ZMHchyM4unjRs-1PTRh/",
         verifier: "Gogolik22",
         status: "Verified",
         percentToQualify: 35,
