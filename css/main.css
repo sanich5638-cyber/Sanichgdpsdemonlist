@@ -1,96 +1,221 @@
-:root {
-    --color-background: white;
-    --color-on-background: black;
-    --color-background-hover: #eee;
-    --color-on-background-hover: black;
-    --color-primary: #0066ff;
-    --color-on-primary: white;
-    --color-error: #de0000;
-    --color-on-error: white;
-}
-
-main.dark,
-header.dark {
-    color-scheme: dark;
-    --color-background: #1c1b1f;
-    --color-on-background: white;
-    --color-background-hover: #27262c;
-    --color-on-background-hover: white;
-    --color-primary: #283593;
-    --color-primary-disabled: #1f213c;
-    --color-on-primary: white;
-    --color-error: #de0000;
-    --color-on-error: white;
-}
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-header,
-main {
-    background-color: var(--color-background);
-    color: var(--color-on-background);
-    display: grid;
-    grid-template-columns: minmax(16rem, 1fr) minmax(16rem, 2fr) minmax(
-            16em,
-            1fr
-        );
-    column-gap: 2rem;
+body {
+    background: #0c0c0c;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    line-height: 1.4;
+    padding: 15px;
 }
 
-header {
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 15px 0;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.main-title {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.demon-count {
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* Стиль демон-листа как в GD */
+.demon-list {
+    background: #1a1a1a;
+    border-radius: 8px;
+    border: 1px solid #2a2a2a;
+}
+
+.demon-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #2a2a2a;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.demon-item:hover {
+    background: #252525;
+}
+
+.demon-item:last-child {
+    border-bottom: none;
+}
+
+.demon-position {
+    color: #ff6b6b;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 3px;
+}
+
+.demon-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.demon-author {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.demon-progress {
+    color: #4ecdc4;
+    font-size: 0.85em;
+}
+
+/* Модальное окно */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
     display: flex;
-    padding-inline: calc(25vw - 10rem);
-    height: 4rem;
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
-}
-@media screen and (min-width: 1366px) {
-    header {
-        display: grid;
-        padding-inline: 0;
-    }
-}
-header .logo {
-    justify-self: end;
-    align-self: center;
-    display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-}
-header .nav {
-    flex: 1;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-main {
-    height: 0;
-    flex: 1;
-    display: grid;
-    grid-template-rows: minmax(0, 1fr);
-    column-gap: 2rem;
-}
-main > div {
+.modal-content {
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 25px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
     overflow-y: auto;
 }
 
-.spinner {
+.modal-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    grid-column: span 3;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
 }
 
-input[type="checkbox"] {
-    height: 1.25rem;
-    width: 1.25rem;
+.modal-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5em;
     cursor: pointer;
-    margin: 0;
-  }
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.demon-info {
+    margin-bottom: 20px;
+}
+
+.info-row {
+    margin-bottom: 8px;
+    display: flex;
+}
+
+.info-label {
+    color: #888;
+    min-width: 120px;
+}
+
+.info-value {
+    color: #ffffff;
+}
+
+.records-section {
+    margin-top: 20px;
+}
+
+.records-title {
+    color: #ff6b6b;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.record-item {
+    background: #252525;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    border-left: 3px solid #4ecdc4;
+}
+
+.record-user {
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 3px;
+}
+
+.record-details {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.record-link {
+    color: #4ecdc4;
+    text-decoration: none;
+}
+
+.record-link:hover {
+    text-decoration: underline;
+}
+
+/* Статусы */
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7em;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.status-verified {
+    background: #27ae60;
+    color: white;
+}
+
+.status-pending {
+    background: #f39c12;
+    color: black;
+}
+
+.status-unverified {
+    background: #e74c3c;
+    color: white;
+    }
