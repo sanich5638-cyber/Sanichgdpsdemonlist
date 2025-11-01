@@ -4,102 +4,117 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sanich GDPS Demon List</title>
-
-        <link rel="icon" href="list_icon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@500;700&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" type="text/css" href="css/reset.css" />
-        <link rel="stylesheet" type="text/css" href="css/typography.css" />
-        <link rel="stylesheet" type="text/css" href="css/main.css" />
-        <link rel="stylesheet" type="text/css" href="css/pages/list.css" />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="css/pages/leaderboard.css"
-        />
-        <link rel="stylesheet" type="text/css" href="css/pages/roulette.css" />
-        <link rel="stylesheet" type="text/css" href="css/components/nav.css" />
-        <link rel="stylesheet" type="text/css" href="css/components/btn.css" />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="css/components/tabs.css"
-        />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(to bottom, #000000, #1e3a8a);
+                min-height: 100vh;
+                font-family: Arial, sans-serif;
+                color: white;
+            }
+            
+            .container {
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 10px;
+            }
+            
+            /* СТИЛИ ВКЛАДОК */
+            .nav {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .nav__tab {
+                padding: 8px 15px;
+                background: rgba(255, 107, 0, 0.2);
+                border: 1px solid #ff6b00;
+                border-radius: 5px;
+                color: white;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            
+            .nav__tab.active {
+                background: #ff6b00;
+            }
+            
+            /* СТИЛИ КАРТОЧЕК */
+            .demon-card {
+                border: 2px solid #ff6b00;
+                border-radius: 8px;
+                padding: 15px;
+                margin-bottom: 10px;
+                text-align: center;
+                position: relative;
+                background: rgba(26, 26, 26, 0.9);
+            }
+            
+            .demon-name {
+                font-size: 1.2em;
+                font-weight: bold;
+                color: #fff;
+                margin-bottom: 20px;
+            }
+            
+            .demon-author {
+                position: absolute;
+                bottom: 8px;
+                right: 12px;
+                color: #888;
+                font-size: 0.8em;
+            }
+            
+            .header {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+        </style>
         <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
     </head>
-    <body id="app">
-        <header :class="{ dark: store.dark }">
-            <div class="logo">
-                <h2>Sanich GDPS Demon List</h2>
-                <p>v1.0.0</p>
-            </div>
-            <nav class="nav">
-                <a class="nav__tab" :class="{ active: currentPage === 'list' }" @click="switchPage('list')">
-                    <span class="type-label-lg">List</span>
-                </a>
-                <a class="nav__tab" :class="{ active: currentPage === 'leaderboard' }" @click="switchPage('leaderboard')">
-                    <span class="type-label-lg">Leaderboard</span>
-                </a>
-                <a class="nav__tab" :class="{ active: currentPage === 'roulette' }" @click="switchPage('roulette')">
-                    <span class="type-label-lg">Roulette</span>
-                </a>
-                <div class="nav__actions">
-                    <button class="nav__icon" @click.prevent="store.toggleDark()">
-                        <img
-                            :src="store.dark ? 'assets/light.svg' : 'assets/dark.svg'"
-                            alt=""
-                        />
-                    </button>
-                    <a class="nav__icon" href="#">
-                        <img src="assets/discord.svg" alt="Discord Logo" />
-                    </a>
-                    <a
-                        class="nav__cta type-label-lg"
-                        href="#"
-                        target="_blank"
-                        >Submit Record</a
-                    >
+    <body>
+        <div id="app">
+            <div class="container">
+                <div class="header">
+                    <h2>Sanich GDPS Demon List</h2>
                 </div>
-            </nav>
-        </header>
-
-        <div class="page-content" :class="{ dark: store.dark }">
-            <!-- СТРАНИЦА LIST -->
-            <div v-if="currentPage === 'list'" class="page">
-                <div class="demons-container">
-                    <h3>Demon List</h3>
-                    <div class="demon-item" v-for="(demon, index) in demons" :key="index">
-                        <div class="demon-position">#{{ index + 1 }}</div>
-                        <div class="demon-info">
-                            <div class="demon-name">{{ demon.name }}</div>
-                            <div class="demon-author">by {{ demon.author }}</div>
-                        </div>
+                
+                <!-- ВКЛАДКИ -->
+                <nav class="nav">
+                    <a class="nav__tab" :class="{ active: currentPage === 'list' }" @click="switchPage('list')">
+                        List
+                    </a>
+                    <a class="nav__tab" :class="{ active: currentPage === 'leaderboard' }" @click="switchPage('leaderboard')">
+                        Leaderboard
+                    </a>
+                    <a class="nav__tab" :class="{ active: currentPage === 'roulette' }" @click="switchPage('roulette')">
+                        Roulette
+                    </a>
+                </nav>
+                
+                <!-- СОДЕРЖИМОЕ ВКЛАДОК -->
+                <div v-if="currentPage === 'list'">
+                    <div class="demon-card" v-for="(demon, index) in demons" :key="index">
+                        <div class="demon-name">{{ demon.name }}</div>
+                        <div class="demon-author">{{ demon.author }}</div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- СТРАНИЦА LEADERBOARD -->
-            <div v-if="currentPage === 'leaderboard'" class="page">
-                <h3>Leaderboard</h3>
-                <p>Таблица лидеров будет здесь</p>
-                <div class="leaderboard-item" v-for="(player, index) in leaderboard" :key="index">
-                    <div class="player-rank">#{{ index + 1 }}</div>
-                    <div class="player-name">{{ player.name }}</div>
-                    <div class="player-score">{{ player.score }}</div>
+                
+                <div v-if="currentPage === 'leaderboard'">
+                    <div class="demon-card">
+                        <div class="demon-name">Leaderboard</div>
+                        <div class="demon-author">Coming Soon</div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- СТРАНИЦА ROULETTE -->
-            <div v-if="currentPage === 'roulette'" class="page">
-                <h3>Roulette</h3>
-                <p>Рулетка будет здесь</p>
-                <button class="roulette-btn" @click="spinRoulette">Spin Roulette</button>
-                <div v-if="selectedDemon" class="roulette-result">
-                    Selected: {{ selectedDemon.name }}
+                
+                <div v-if="currentPage === 'roulette'">
+                    <div class="demon-card">
+                        <div class="demon-name">Roulette</div>
+                        <div class="demon-author">Coming Soon</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,40 +126,21 @@
                 data() {
                     return {
                         currentPage: 'list',
-                        store: {
-                            dark: false,
-                            toggleDark() {
-                                this.dark = !this.dark;
-                            }
-                        },
                         demons: [
                             { name: "Road to hell", author: "DudeArctik" },
                             { name: "Silent Yatagista", author: "DudeArctik" },
-                            { name: "Pulsar", author: "Gdsher228" }
-                        ],
-                        leaderboard: [
-                            { name: "Nagasaki", score: 500 },
-                            { name: "gogolik22", score: 499 },
-                            { name: "zolnik", score: 544 }
-                        ],
-                        selectedDemon: null
+                            { name: "Pulsar", author: "Gdsher228" },
+                            { name: "Fire hell", author: "DudeArctik" },
+                            { name: "Love is", author: "nocssnew" }
+                        ]
                     }
                 },
                 methods: {
                     switchPage(page) {
                         this.currentPage = page;
-                    },
-                    spinRoulette() {
-                        if (this.demons.length > 0) {
-                            const randomIndex = Math.floor(Math.random() * this.demons.length);
-                            this.selectedDemon = this.demons[randomIndex];
-                        }
                     }
-                },
-                mounted() {
-                    console.log("Sanich GDPS Demon List loaded!");
                 }
             }).mount('#app');
         </script>
     </body>
-                        </html>
+</html>
