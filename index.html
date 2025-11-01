@@ -39,6 +39,12 @@
             text-align: center;
             position: relative;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demon-card:hover {
+            background: rgba(50, 50, 50, 0.9);
+            transform: scale(1.02);
         }
         
         .demon-name { 
@@ -64,7 +70,10 @@
             </div>
             
             <!-- КОМПАКТНЫЙ СПИСОК ДЕМОНОВ -->
-            <div class="demon-card" v-for="demon in demons" :key="demon.id">
+            <div class="demon-card" 
+                 v-for="demon in demons" 
+                 :key="demon.id"
+                 @click="showDemonInfo(demon)">
                 <div class="demon-name">{{ demon.name }}</div>
                 <div class="demon-author">{{ demon.author }}</div>
             </div>
@@ -84,6 +93,11 @@
                         { id: 101, name: "Fire hell", author: "DudeArctik" },
                         { id: 176, name: "Love is", author: "nocssnew" }
                     ]
+                }
+            },
+            methods: {
+                showDemonInfo(demon) {
+                    alert(`Демон: ${demon.name}\nАвтор: ${demon.author}\nID: ${demon.id}`);
                 }
             }
         }).mount('#app');
