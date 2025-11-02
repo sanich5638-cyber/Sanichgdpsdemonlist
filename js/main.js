@@ -53,7 +53,7 @@ const demonsData = [
         author: "DudeArctik",
         creators: ["DudeArctik", "Skrejj009r"],
         position: 4,
-        verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
+        verification: "https://m.youtube.com/watch?v=GaJk0QLlPSA&si=xs5Nfye1kKjPXmcb",
         verifier: "Skrejj009r",
         status: "Verified",
         percentToQualify: 35,
