@@ -47,112 +47,119 @@
             </div>
         </div>
 
-        <!-- МОДАЛЬНОЕ ОКНО -->
-        <div class="modal-overlay" v-if="selectedDemon" @click="closeModal">
-            <div class="modal-content" @click.stop>
-                <button class="close-btn" @click="closeModal">×</button>
-                
-                <div class="modal-header">
-                    <h1 class="modal-title">{{ selectedDemon.name }}</h1>
-                    <div class="modal-subtitle">published by {{ selectedDemon.author }}</div>
-                </div>
+<!-- Модальное окно В СТИЛЕ POINTERCRATE -->
+<div class="modal-overlay" v-if="selectedDemon" @click="closeModal">
+    <div class="modal-content" @click.stop>
+        <button class="close-btn" @click="closeModal">×</button>
+        
+        <div class="modal-header">
+            <h1 class="modal-title">{{ selectedDemon.name }}</h1>
+            <div class="modal-subtitle">published by {{ selectedDemon.author }}</div>
+        </div>
 
-                <div class="modal-body">
-                    <!-- ОСНОВНАЯ ИНФОРМАЦИЯ -->
-                    <div class="info-section">
-                        <h2 class="section-title">Level Information</h2>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <div class="info-label">Level Password</div>
-                                <div class="info-value">{{ selectedDemon.password }}</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Level ID</div>
-                                <div class="info-value">{{ selectedDemon.id }}</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Verifier</div>
-                                <div class="info-value">{{ selectedDemon.verifier || 'Not verified' }}</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Creators</div>
-                                <div class="info-value">{{ selectedDemon.creators.join(', ') }}</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Qualify %</div>
-                                <div class="info-value">{{ selectedDemon.percentToQualify }}%</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Status</div>
-                                <div class="info-value">
-                                    <span :class="['status-badge', getStatusClass(selectedDemon)]">
-                                        {{ getStatusText(selectedDemon) }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+        <div class="modal-body">
+            <!-- ОСНОВНАЯ ИНФОРМАЦИЯ -->
+            <div class="info-section">
+                <h2 class="section-title">Level Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Level Password</div>
+                        <div class="info-value">{{ selectedDemon.password }}</div>
                     </div>
-
-                    <!-- DEMONLIST SCORES -->
-                    <div class="info-section">
-                        <h2 class="section-title">Demonlist Scores</h2>
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <div class="info-label">Score (100%)</div>
-                                <div class="info-value">{{ calculateScore(selectedDemon, 100) }}</div>
-                            </div>
-                            <div class="info-item">
-                                <div class="info-label">Score ({{ selectedDemon.percentToQualify }}%)</div>
-                                <div class="info-value">{{ calculateScore(selectedDemon, selectedDemon.percentToQualify) }}</div>
-                            </div>
-                        </div>
+                    <div class="info-item">
+                        <div class="info-label">Level ID</div>
+                        <div class="info-value">{{ selectedDemon.id }}</div>
                     </div>
-
-                    <!-- RECORDS -->
-                    <div class="info-section">
-                        <h2 class="section-title">
-                            Records 
-                            <span style="color: #888; font-size: 0.8em; font-weight: normal;">
-                                ({{ selectedDemon.records ? selectedDemon.records.length : 0 }} records registered)
+                    <div class="info-item">
+                        <div class="info-label">Verifier</div>
+                        <div class="info-value">{{ selectedDemon.verifier || 'Not verified' }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Creators</div>
+                        <div class="info-value">{{ selectedDemon.creators.join(', ') }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Qualify %</div>
+                        <div class="info-value">{{ selectedDemon.percentToQualify }}%</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">
+                            <span :class="['status-badge', getStatusClass(selectedDemon)]">
+                                {{ getStatusText(selectedDemon) }}
                             </span>
-                        </h2>
-                        
-                        <div v-if="selectedDemon.records && selectedDemon.records.length > 0">
-                            <table class="records-table">
-                                <thead>
-                                    <tr>
-                                        <th>Player</th>
-                                        <th>Progress</th>
-                                        <th>Video</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(record, index) in selectedDemon.records" :key="index">
-                                        <td class="record-user">{{ record.user }}</td>
-                                        <td class="record-progress">
-                                            {{ getRecordDisplay(record, selectedDemon.levelType) }}
-                                            <span v-if="record.comment" style="color: #888; font-size: 0.8em;">
-                                                - {{ record.comment }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <a v-if="record.link" :href="record.link" target="_blank" class="record-link">Watch</a>
-                                            <span v-else style="color: #888">No video</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                        <div v-else style="color: #888; text-align: center; padding: 20px;">
-                            No records yet
+                    </div>
+                    <!-- ★★★ VERIFICATION ПОЛЕ ★★★ -->
+                    <div class="info-item">
+                        <div class="info-label">Verification</div>
+                        <div class="info-value">
+                            <a v-if="hasVerification(selectedDemon)" 
+                               :href="selectedDemon.verification" 
+                               target="_blank" 
+                               class="record-link">
+                                Watch Video
+                            </a>
+                            <span v-else style="color: #888">No verification</span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- DEMONLIST SCORES -->
+            <div class="info-section">
+                <h2 class="section-title">Demonlist Scores</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Score (100%)</div>
+                        <div class="info-value">{{ calculateScore(selectedDemon, 100) }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Score ({{ selectedDemon.percentToQualify }}%)</div>
+                        <div class="info-value">{{ calculateScore(selectedDemon, selectedDemon.percentToQualify) }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECORDS -->
+            <div class="info-section">
+                <h2 class="section-title">
+                    Records 
+                    <span style="color: #888; font-size: 0.8em; font-weight: normal;">
+                        ({{ selectedDemon.records ? selectedDemon.records.length : 0 }} records registered)
+                    </span>
+                </h2>
+                
+                <div v-if="selectedDemon.records && selectedDemon.records.length > 0">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Progress</th>
+                                <th>Video</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(record, index) in selectedDemon.records" :key="index">
+                                <td class="record-user">{{ record.user }}</td>
+                                <td class="record-progress">
+                                    {{ getRecordDisplay(record, selectedDemon.levelType) }}
+                                    <span v-if="record.comment" style="color: #888; font-size: 0.8em;">
+                                        - {{ record.comment }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a v-if="record.link" :href="record.link" target="_blank" class="record-link">Watch</a>
+                                    <span v-else style="color: #888">No video</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div v-else style="color: #888; text-align: center; padding: 20px;">
+                    No records yet
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- ПОДКЛЮЧЕНИЕ JavaScript -->
-    <script src="js/main.js"></script>
-</body>
-                    </html>
+</div>
