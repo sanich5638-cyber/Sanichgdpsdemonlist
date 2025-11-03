@@ -1,43 +1,11 @@
-// Данные демонов в формате GD Demon List
+// Данные демонов - 20 верифицированных уровней
 const demonsData = [
-    {
-        id: 185,
-        name: "Road to hell",
-        author: "DudeArctik",
-        creators: ["DudeArctik"],
-        position: 1,
-        verification: "",
-        verifier: "",
-        status: "In verification",
-        percentToQualify: 1,
-        password: "free to copy",
-        records: [
-            { user: "DudeArctik", percent: 1.88, link: "https://www.youtube.com/watch?v=link_to_DudeArctik_attempt" },
-            { user: "Extreme", percent: 1.11, link: "https://www.youtube.com/watch?v=link_to_Extreme_attempt" }
-        ]
-    },
-    {
-        id: 116,
-        name: "Silent Yatagista",
-        author: "DudeArctik",
-        creators: ["DudeArctik", "Extreme", "Skrejj009"],
-        position: 2,
-        verification: "",
-        verifier: "",
-        status: "In verification",
-        percentToQualify: 10,
-        password: "Not Copyable",
-        records: [
-            { user: "Silent", percent: 11, link: "https://www.youtube.com/watch?v=MgJeijBGKHU" },
-            { user: "Skrejj009r", percent: 19, link: "https://www.youtube.com/watch?v=MgJeijBGKHU" }
-        ]
-    },
     {
         id: 113,
         name: "Pulsar",
         author: "Gdsher228",
         creators: ["Gdsher228"],
-        position: 3,
+        position: 1,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Gdsher228",
         status: "Verified",
@@ -52,8 +20,8 @@ const demonsData = [
         name: "Fire hell",
         author: "DudeArctik",
         creators: ["DudeArctik", "Skrejj009r"],
-        position: 4,
-        verification: "https://m.youtube.com/watch?v=GaJk0QLlPSA&si=xs5Nfye1kKjPXmcb",
+        position: 2,
+        verification: "https://youtube.com/GaJk0QLlPSA?si=huqJAIEjCYXpwk5p",
         verifier: "Skrejj009r",
         status: "Verified",
         percentToQualify: 35,
@@ -67,7 +35,7 @@ const demonsData = [
         name: "Love is",
         author: "nocssnew",
         creators: ["nocssnew"],
-        position: 5,
+        position: 3,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "nocssnew's friend",
         status: "Verified",
@@ -85,7 +53,7 @@ const demonsData = [
         name: "HeartBeat",
         author: "Nagasaki",
         creators: ["Nagasaki"],
-        position: 6,
+        position: 4,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Zoink",
         status: "Verified",
@@ -97,27 +65,30 @@ const demonsData = [
         ]
     },
     {
-        id: 164,
-        name: "Sweet dream",
-        author: "Nagasaki",
-        creators: ["Nagasaki"],
-        position: 7,
+        id: 117,
+        name: "Silent",
+        author: "Extreme",
+        creators: ["Extreme"],
+        position: 5,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
-        verifier: "Nagasaki",
+        verifier: "Extreme",
         status: "Verified",
         percentToQualify: 35,
         password: "free to copy",
-        records: []
+        records: [
+            { user: "Extreme", percent: 100, link: "https://www.youtube.com/watch?v=MgJeijBGKHU" },
+            { user: "Skrejj009", percent: 99, link: "https://www.youtube.com/watch?v=MgJeijBGKHU" }
+        ]
     },
     {
         id: 158,
         name: "every start",
         author: "Max2526462",
         creators: ["Max2526462"],
-        position: 8,
-        verification: "No data",
-        verifier: "Unknown",
-        status: "Unverified",
+        position: 6,
+        verification: "",
+        verifier: "Community",
+        status: "Verified",
         percentToQualify: 35,
         password: "free to copy",
         records: [
@@ -131,7 +102,7 @@ const demonsData = [
         name: "Hard demon",
         author: "a11vaw",
         creators: ["a11vaw"],
-        position: 9,
+        position: 7,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "a11vaw",
         status: "Verified",
@@ -140,27 +111,24 @@ const demonsData = [
         records: []
     },
     {
-        id: 117,
-        name: "Silent",
-        author: "Extreme",
-        creators: ["Extreme"],
-        position: 10,
+        id: 164,
+        name: "Sweet dream",
+        author: "Nagasaki",
+        creators: ["Nagasaki"],
+        position: 8,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
-        verifier: "Extreme",
+        verifier: "Nagasaki",
         status: "Verified",
         percentToQualify: 35,
         password: "free to copy",
-        records: [
-            { user: "Extreme", percent: 100, link: "https://www.youtube.com/watch?v=MgJeijBGKHU" },
-            { user: "Skrejj009", percent: 99, link: "https://www.youtube.com/watch?v=MgJeijBGKHU" }
-        ]
+        records: []
     },
     {
         id: 140,
         name: "Creo Sphere",
         author: "Nagasaki",
         creators: ["Nagasaki"],
-        position: 11,
+        position: 9,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Nagasaki",
         status: "Verified",
@@ -176,7 +144,7 @@ const demonsData = [
         name: "kocmoc",
         author: "The4lovek",
         creators: ["The4lovek"],
-        position: 12,
+        position: 10,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Tonyeye",
         status: "Verified",
@@ -193,7 +161,7 @@ const demonsData = [
         name: "When you find m3",
         author: "Tonyeye",
         creators: ["Tonyeye"],
-        position: 13,
+        position: 11,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Tonyeye",
         status: "Verified",
@@ -204,11 +172,24 @@ const demonsData = [
         ]
     },
     {
+        id: 198,
+        name: "headache",
+        author: "Gogolik22",
+        creators: ["Gogolik22"],
+        position: 12,
+        verification: "",
+        verifier: "Gogolik22",
+        status: "Verified",
+        percentToQualify: 35,
+        password: "free to copy",
+        records: []
+    },
+    {
         id: 154,
         name: "fallen angel",
         author: "Nagasaki",
         creators: ["Nagasaki"],
-        position: 14,
+        position: 13,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "zoink",
         status: "Verified",
@@ -224,8 +205,8 @@ const demonsData = [
         name: "You love again",
         author: "Gogolik22",
         creators: ["Nocssnew"],
-        position: 15,
-        verification: "https://vm.tiktok.com/ZMHchyM4unjRs-1PTRh/",
+        position: 14,
+        verification: "https://vm.tiktok.com/ZMHcfxyRjc8Y2-PJ5xh/",
         verifier: "Gogolik22",
         status: "Verified",
         percentToQualify: 35,
@@ -237,7 +218,7 @@ const demonsData = [
         name: "Blaster temple",
         author: "Max2526462",
         creators: ["Max2526462"],
-        position: 16,
+        position: 15,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Extreme",
         status: "Verified",
@@ -256,10 +237,10 @@ const demonsData = [
         name: "Purgatori",
         author: "Max2526362",
         creators: ["Max2526362"],
-        position: 17,
+        position: 16,
         verification: "",
-        verifier: "Unknown",
-        status: "Unverified",
+        verifier: "Community",
+        status: "Verified",
         percentToQualify: 35,
         password: "free to copy",
         records: [
@@ -273,7 +254,7 @@ const demonsData = [
         name: "Ostrov Alpha",
         author: "gogolik22",
         creators: ["gogolik22"],
-        position: 18,
+        position: 17,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Extreme",
         status: "Verified",
@@ -289,7 +270,7 @@ const demonsData = [
         name: "OCTPOB",
         author: "Unizart",
         creators: ["Unizart"],
-        position: 19,
+        position: 18,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "Extreme",
         status: "Verified",
@@ -302,10 +283,10 @@ const demonsData = [
         name: "Deadworld",
         author: "Max2526462",
         creators: ["Max2526462"],
-        position: 20,
+        position: 19,
         verification: "",
-        verifier: "",
-        status: "Unverified",
+        verifier: "Community",
+        status: "Verified",
         percentToQualify: 35,
         password: "free to copy",
         records: []
@@ -315,7 +296,7 @@ const demonsData = [
         name: "dreams",
         author: "zoink",
         creators: ["zoink"],
-        position: 21,
+        position: 20,
         verification: "https://www.youtube.com/watch?v=ISTl28wKSXc",
         verifier: "zoink",
         status: "Verified",
@@ -370,73 +351,71 @@ const app = Vue.createApp({
         stats() {
             return {
                 total: this.demons.length,
-                verified: this.demons.filter(d => d.verifier && d.verification).length,
-                inVerification: this.demons.filter(d => d.status && d.status.includes('verification')).length,
+                verified: this.demons.filter(d => d.status === 'Verified').length,
+                inVerification: this.demons.filter(d => d.status === 'In verification').length,
                 platformers: this.demons.filter(d => d.levelType === 'Platformer').length
             };
         }
     },
     
     methods: {
-    // Выбор демона для просмотра деталей
-    selectDemon(demon) {
-        this.selectedDemon = demon;
-    },
-    
-    // Закрытие модального окна
-    closeModal() {
-        this.selectedDemon = null;
-    },
-    
-    // Получение статуса верификации
-    getStatusClass(demon) {
-        if (demon.verifier && demon.verification) return 'status-verified';
-        if (demon.status && demon.status.includes('verification')) return 'status-pending';
-        return 'status-unverified';
-    },
-    
-    // Текст статуса
-    getStatusText(demon) {
-        if (demon.verifier && demon.verification) return 'Verified';
-        if (demon.status && demon.status.includes('verification')) return 'In Verification';
-        return 'Unverified';
-    },
-    
-    // Расчет прогресса для отображения
-    getDemonProgress(demon) {
-        if (demon.records && demon.records.length > 0) {
-            const bestRecord = Math.max(...demon.records.map(r => r.percent));
-            return `${bestRecord}% — 100%`;
+        // Выбор демона для просмотра деталей
+        selectDemon(demon) {
+            this.selectedDemon = demon;
+        },
+        
+        // Закрытие модального окна
+        closeModal() {
+            this.selectedDemon = null;
+        },
+        
+        // Получение статуса верификации
+        getStatusClass(demon) {
+            if (demon.status === 'Verified') return 'status-verified';
+            if (demon.status === 'In verification') return 'status-pending';
+            return 'status-unverified';
+        },
+        
+        // Текст статуса
+        getStatusText(demon) {
+            return demon.status;
+        },
+        
+        // Расчет прогресса для отображения
+        getDemonProgress(demon) {
+            if (demon.records && demon.records.length > 0) {
+                const bestRecord = Math.max(...demon.records.map(r => r.percent || 0));
+                return `${bestRecord}% — 100%`;
+            }
+            return `0% — 100%`;
+        },
+        
+        // Расчет очков для демон-листа
+        calculateScore(demon, percent) {
+            // Простая формула для демо
+            const baseScore = 1000 - (demon.position * 45);
+            return (baseScore * ((percent || demon.percentToQualify) / 100)).toFixed(2);
+        },
+        
+        // Отображение рекорда (проценты или время)
+        getRecordDisplay(record, levelType) {
+            if (levelType === 'Platformer' && record.time) {
+                return record.time;
+            }
+            return `${record.percent}%`;
+        },
+        
+        // Проверка есть ли верификация
+        hasVerification(demon) {
+            return demon.verification && demon.verification !== '' && demon.verification !== 'No data';
         }
-        return `0% — 100%`;
     },
     
-    // Расчет очков для демон-листа
-    calculateScore(demon, percent) {
-        // Простая формула для демо
-        const baseScore = 1000 - (demon.position * 45);
-        return (baseScore * (percent / 100)).toFixed(2);
-    },
-    
-    // Отображение рекорда (проценты или время)
-    getRecordDisplay(record, levelType) {
-        if (levelType === 'Platformer' && record.time) {
-            return record.time;
-        }
-        return `${record.percent}%`;
-    },
-    
-    // ★★★ ДОБАВЛЕННЫЙ МЕТОД ★★★
-    // Проверка есть ли верификация
-    hasVerification(demon) {
-        return demon.verification && demon.verification !== '' && demon.verification !== 'No data';
+    mounted() {
+        console.log('Sanich GDPS Demon List loaded successfully!');
+        console.log(`Loaded ${this.demons.length} verified demons`);
+        console.log('Created by DudeArctik - GDPS Owner');
     }
-},
-
-mounted() {
-    console.log('GD Demon List loaded successfully!');
-    console.log(`Loaded ${this.demons.length} demons`);
-}
 });
 
 // Монтируем приложение
