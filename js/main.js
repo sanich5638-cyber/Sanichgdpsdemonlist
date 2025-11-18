@@ -368,7 +368,7 @@ const demons = ref([
             { user: "DudeArctik", time: "1:17.295", link: "https://youtube.com/watch?v=link" }
         ]
     }
-]);
+];
 // Инициализация Vue приложения
 const app = Vue.createApp({
     data() {
