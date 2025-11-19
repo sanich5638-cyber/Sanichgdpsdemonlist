@@ -379,7 +379,6 @@ const app = Vue.createApp({
             sortBy: 'position'
         }
     },
-    
     computed: {
         // Фильтрация и сортировка демонов
         processedDemons() {
